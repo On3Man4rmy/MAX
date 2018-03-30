@@ -80,8 +80,8 @@ public class MAX extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        int taste = e.getKeyCode();
-        switch( taste ) {
+        int key = e.getKeyCode();
+        switch(key) {
             case KeyEvent.VK_UP:
                 if(currentPlayer.position.y > START_Y
                         && !isSamePosition(currentPlayer.peekDirection(Direction.UP), otherPlayer)) {
