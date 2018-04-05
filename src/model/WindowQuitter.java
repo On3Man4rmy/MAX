@@ -1,3 +1,4 @@
+package model;
 /**
  * Klasse dient zum schliesen der windows
  *

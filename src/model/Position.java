@@ -1,3 +1,5 @@
+package model;
+
 /**
  * Class representing 2D Coordinates
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
