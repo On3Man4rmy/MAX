@@ -16,8 +16,8 @@ public class Board {
                 "<br/>"
         ));
 
-        for(int y = MAX2.START_Y; y <= MAX2.END_Y; y++) {
-            for(int x = MAX2.START_X; x <= MAX2.END_X; x++) {
+        for(int y = MAX.START_Y; y <= MAX.END_Y; y++) {
+            for(int x = MAX.START_X; x <= MAX.END_X; x++) {
                 if(p1.position.x == x && p1.position.y == y) {
                     s.append(stringforamtter(p1.getShortName()));
                 } else if( p2.position.x == x && p2.position.y == y) {

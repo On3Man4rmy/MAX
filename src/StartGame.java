@@ -27,7 +27,7 @@ import java.awt.event.ActionListener;
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            MAX2 spiel=new MAX2();
+            MAX spiel=new MAX();
         }
     }
 
