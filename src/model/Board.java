@@ -5,38 +5,42 @@ package model;
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 3.0 30.03.2018
  */
+package model;
+
 public class Board {
 
     //TODO find better way than HTML
     public static String draw(Player p1, Player p2, Player currentPlayer, Matrix<Fraction> mat) {
         StringBuilder s = new StringBuilder();
         s.append(String.join(
-                "<br/>",
+                "\n",
                 playerScore(p1),
                 playerScore(p2),
                 currentPlayerInfo(currentPlayer),
-                "<br/>"
+                "\n"
         ));
 
         for(int y = MAX.START_Y; y <= MAX.END_Y; y++) {
             for(int x = MAX.START_X; x <= MAX.END_X; x++) {
                 if(p1.position.x == x && p1.position.y == y) {
                     s.append(stringforamtter(p1.getShortName()));
-                } else if( p2.position.x == x && p2.position.y == y) {
+                    mat.setValue(x,y,Fraction.ZERO);
+                } else if(p2.position.x == x && p2.position.y == y) {
                     s.append(stringforamtter(p2.getShortName()));
+                    mat.setValue(x,y,Fraction.ZERO);
                 } else {
                     s.append(stringforamtter(mat.getValue(x,y).toString()));
 
                 }
             }
-            s.append("<br/>");
+            s.append("\n");
         }
-        return "<html>"+s.toString()+"</html>";
+        return s.toString();
     }
     public static String stringforamtter(String s) {
         if (s.length() == 1) {
 
-            return "|"+"&nbsp;"+"&nbsp;" + s +"&nbsp;"+"&nbsp;"+ "|";
+            return "|"+"  " + s +"  "+ "|";
         }
 
         if (s.length() == 3) {

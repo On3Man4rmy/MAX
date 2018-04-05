@@ -18,6 +18,7 @@ public class Matrix<T> {
 
         for(int i = 1; i <= data.length; i++) {
             for(int y = 1; y <= data[i-1].length; y++) {
+
                 setValue(i, y, initalFieldValue);
             }
         }
@@ -32,7 +33,7 @@ public class Matrix<T> {
                         .append(dataY.toString())
                         .append(" | ");
             }
-            s.append("<br/>");
+            s.append("\n");
         }
 
         return s.toString();

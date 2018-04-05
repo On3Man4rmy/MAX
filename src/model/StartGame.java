@@ -30,6 +30,7 @@ import java.awt.event.ActionListener;
         @Override
         public void actionPerformed(ActionEvent e) {
             MAX spiel=new MAX();
+            spiel.run();
         }
     }
 

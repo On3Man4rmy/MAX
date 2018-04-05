@@ -6,6 +6,8 @@ package model;
  * @date 15/03/2018
  * @version 1.0
  **/
+package model;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 

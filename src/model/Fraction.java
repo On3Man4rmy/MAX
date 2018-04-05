@@ -74,6 +74,9 @@ public class Fraction extends Number implements Comparable<Fraction>{
         if(numerator.equals(BigInteger.ONE)){
             return denominator.toString();
         }
+        if(numerator.equals(BigInteger.ZERO)){
+            return "0";
+        }
         long num = getNumerator().longValue();
         long det = getDenominator().longValue();
         return num + "/" + det;
