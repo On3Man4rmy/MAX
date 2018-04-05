@@ -6,12 +6,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import static javafx.application.Application.launch;
 
 /**
  * MAX Game
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
+
 public class MAX {
     // String colors
     public static final String ANSI_RESET = "\u001B[0m";
@@ -26,18 +28,47 @@ public class MAX {
     public static final Fraction SCORE_TARGET = new Fraction(80, 1);
     public static Fraction sum = new Fraction(0,1);
     public Matrix<Fraction> mat = initMatrix();
-    public Player player1 = new Player(new Position(4, 4), "red", ANSI_RED + "R" + ANSI_RESET);
-    public Player player2 = new Player(new Position(5, 5), "green", ANSI_GREEN + "G" + ANSI_RESET);
+    public Player player1 = new Player(new Position(4, 4), "red", "R");
+    public Player player2 = new Player(new Position(5, 5), "green", "G");
+    Player currentPlayer = player1;
+    Player otherPlayer = player2;
+    public Board board = new Board();
 
-    /*
+    public MAX() {
+        board.update(player1, player2, currentPlayer, mat);
+    }
+
+    public void enterAction(Actions action) {
+        if (action == Actions.UP
+                && currentPlayer.position.y > START_Y
+                && !isSamePosition(currentPlayer.peekDirection(Direction.UP), otherPlayer)) {
+            currentPlayer.moveDirection(Direction.UP);
+        }
+        if (action == Actions.LEFT
+                && currentPlayer.position.x > START_X
+                && !isSamePosition(currentPlayer.peekDirection(Direction.LEFT), otherPlayer)) {
+            currentPlayer.moveDirection(Direction.LEFT);
+        }
+        if (action == Actions.DOWN
+                && currentPlayer.position.y < END_Y
+                && !isSamePosition(currentPlayer.peekDirection(Direction.DOWN), otherPlayer)) {
+            currentPlayer.moveDirection(Direction.DOWN);
+        }
+        if (action == Actions.RIGHT
+                && currentPlayer.position.x < END_X
+                && !isSamePosition(currentPlayer.peekDirection(Direction.RIGHT), otherPlayer)) {
+            currentPlayer.moveDirection(Direction.RIGHT);
+        }
+
+        board.update(player1, player2, currentPlayer, mat);
+    }
+/*
     public static void main(String[] args) throws IOException {
         String line;
         Boolean end = false;
         Matrix<Fraction> mat = initMatrix();
         Player player1 = new Player(new Position(4, 4), "red", ANSI_RED + "R" + ANSI_RESET);
         Player player2 = new Player(new Position(5, 5), "green", ANSI_GREEN + "G" + ANSI_RESET);
-        Player currentPlayer = player1;
-        Player otherPlayer = player2;
 
         // Inital draw
         Board.draw(player1, player2, currentPlayer, mat);
@@ -99,7 +130,6 @@ public class MAX {
             // Update console output
             if(!line.equalsIgnoreCase("quit")) {
                 Board.draw(player1, player2, currentPlayer, mat);
-            }
             else{
                 System.out.println("Game cancelled");
             }
@@ -126,8 +156,11 @@ public class MAX {
 
         // Close buffered reader
         in.close();
+    }*/
+
+    public void run(){
+               launch();
     }
-*/
     // Check if players have the same position
     public static Boolean isSamePosition(Player p1, Player p2) {
         return p1.position.equals(p2.position);
@@ -166,3 +199,4 @@ public class MAX {
         return mat;
     }
 }
+

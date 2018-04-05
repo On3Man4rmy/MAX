@@ -1,5 +1,9 @@
 package model;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.math.BigInteger;
 
 /**
@@ -7,11 +11,34 @@ import java.math.BigInteger;
  * @version 2.0 08.01.2018
  */
 public class Fraction extends Number implements Comparable<Fraction>{
+    StringProperty toStringProperty = new SimpleStringProperty();
+
+     public void setToStringProperty(String value) {
+        toStringProperty.setValue(value);
+    }
+
+     public StringProperty getToStringProperty() {
+        return toStringProperty;
+    }
+
     public static final Fraction ZERO = new Fraction(0,1);
     public static final Fraction DEFAULT = new Fraction(0,1);
 
-    private BigInteger numerator;
-    private BigInteger denominator;
+    private BigInteger numerator = BigInteger.ZERO;
+    private BigInteger denominator = BigInteger.ZERO;
+
+    private void setNumerator(BigInteger numerator) {
+        if(!this.numerator.equals(numerator)) {
+            this.numerator = numerator;
+            setToStringProperty(toString());
+        }
+    }
+    private void setDenominator(BigInteger denominator) {
+        if(!this.denominator.equals(denominator)) {
+            this.denominator = denominator;
+            setToStringProperty(toString());
+        }
+    }
 
     public Fraction(BigInteger numerator, BigInteger denominator)  {
         super();
@@ -26,8 +53,8 @@ public class Fraction extends Number implements Comparable<Fraction>{
         }
 
         BigInteger gcd = numerator.gcd(denominator);
-        this.numerator = numerator.divide(gcd);
-        this.denominator = denominator.divide(gcd);
+        setNumerator(numerator.divide(gcd));
+        setDenominator(denominator.divide(gcd));
     }
 
     public Fraction(int numerator, int denominator) {
@@ -38,8 +65,8 @@ public class Fraction extends Number implements Comparable<Fraction>{
     }
 
     public Fraction(BigInteger numerator) {
-        this.numerator = numerator;
-        this.denominator = BigInteger.ONE;
+        setNumerator(numerator);
+        setDenominator(BigInteger.ONE);
     }
 
     Fraction add(Fraction r) throws DivisionByZeroException{
@@ -71,15 +98,13 @@ public class Fraction extends Number implements Comparable<Fraction>{
     }
 
     public String toString(){
-        if(numerator.equals(BigInteger.ONE)){
-            return denominator.toString();
+        if(isInteger()) {
+            return numerator.toString();
+        } else {
+            long num = getNumerator().longValue();
+            long det = getDenominator().longValue();
+            return num + "/" + det;
         }
-        if(numerator.equals(BigInteger.ZERO)){
-            return "0";
-        }
-        long num = getNumerator().longValue();
-        long det = getDenominator().longValue();
-        return num + "/" + det;
     }
 
     boolean isInteger() {

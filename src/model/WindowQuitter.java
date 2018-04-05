@@ -1,4 +1,8 @@
 package model;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 /**
  * Klasse dient zum schliesen der windows
  *
@@ -6,11 +10,6 @@ package model;
  * @date 15/03/2018
  * @version 1.0
  **/
-package model;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
 public class WindowQuitter extends WindowAdapter // ist ein WindowListener und EventListener
 {
     public void windowClosing(WindowEvent e) // einzig ueberschriebene Methode

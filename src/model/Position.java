@@ -5,8 +5,6 @@ package model;
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
-package model;
-
 public class Position implements Comparable<Position> {
     int x;
     int y;

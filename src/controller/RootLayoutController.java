@@ -1,13 +1,20 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import model.Actions;
+import model.BoardElement;
 import model.MAX;
+import util.KeyboardEventPublisher;
 
 import java.awt.*;
+
+import static javafx.scene.input.KeyCode.SHIFT;
+import static model.Direction.*;
 
 public class RootLayoutController {
     @FXML
@@ -26,10 +33,19 @@ public class RootLayoutController {
             playerMap.getColumnConstraints().add(column);
 
             for(int j = 0; j < 8; j++) {
-                FractionController fractionView = new FractionController(game.mat.getValue(i+1, j+1));
+                FractionController fractionView = new FractionController(game.board.getBoardElements()[i][j]);
                 playerMap.add(fractionView, i, j);
             }
         }
+
+        KeyboardEventPublisher.subscribe(event -> {
+            switch (event.getCode()) {
+                case UP:    game.enterAction(Actions.UP); break;
+                case DOWN:  game.enterAction(Actions.DOWN); break;
+                case LEFT:  game.enterAction(Actions.LEFT); break;
+                case RIGHT: game.enterAction(Actions.RIGHT); break;
+            }
+        });
 
         rootLayout.add(playerMap, 0, 1);
     }
