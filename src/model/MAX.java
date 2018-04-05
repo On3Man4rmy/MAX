@@ -1,5 +1,7 @@
 package model;
 
+import util.MathUtil;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -23,9 +25,12 @@ public class MAX {
     public static final int START_Y = 1;
     public static final Fraction SCORE_TARGET = new Fraction(80, 1);
     public static Fraction sum = new Fraction(0,1);
+    public Matrix<Fraction> mat = initMatrix();
+    public Player player1 = new Player(new Position(4, 4), "red", ANSI_RED + "R" + ANSI_RESET);
+    public Player player2 = new Player(new Position(5, 5), "green", ANSI_GREEN + "G" + ANSI_RESET);
 
+    /*
     public static void main(String[] args) throws IOException {
-        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String line;
         Boolean end = false;
         Matrix<Fraction> mat = initMatrix();
@@ -122,7 +127,7 @@ public class MAX {
         // Close buffered reader
         in.close();
     }
-
+*/
     // Check if players have the same position
     public static Boolean isSamePosition(Player p1, Player p2) {
         return p1.position.equals(p2.position);

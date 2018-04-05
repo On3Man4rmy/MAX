@@ -4,16 +4,20 @@ import javafx.beans.property.Property;
 import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.TextField;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
+import model.Fraction;
 
 import java.io.IOException;
 
 public class FractionController extends VBox {
     @FXML
-    private TextField textField;
+    private Label lblFraction;
+    private Fraction fraction;
 
-    public FractionController() {
+    public FractionController(Fraction fraction) {
+        this.fraction = fraction;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/FractionView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -23,35 +27,19 @@ public class FractionController extends VBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
-    }
 
-    public String getText() {
-        return textProperty().get();
+        alignmentProperty().set(Pos.CENTER);
+        lblFraction.setText(fraction.toString());
     }
-
-    public void setText(String value) { textProperty().set(value); }
 
 
     public StringProperty textProperty() {
-        return textField.textProperty();
-    }
-
-    public void bindProperty(Property<String> value) {
-        textField.textProperty().bindBidirectional(value);
-    }
-
-    public StringProperty textProperty(Property<String> value) {
-        return textField.textProperty();
+        return lblFraction.textProperty();
     }
 
     @FXML
     protected void doSomething() throws InterruptedException {
         System.out.println("The button was clicked!");
         wait();
-    }
-
-    @FXML
-    protected void doSomethingElse() {
-        System.out.println("The button was clicked!");
     }
 }
