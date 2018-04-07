@@ -1,5 +1,6 @@
 package model;
 
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -10,14 +11,14 @@ import java.math.BigInteger;
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
-public class Fraction extends Number implements Comparable<Fraction>{
+public class Fraction extends Number implements Comparable<Fraction> {
     StringProperty toStringProperty = new SimpleStringProperty();
 
-     public void setToStringProperty(String value) {
+    public void setToStringProperty(String value) {
         toStringProperty.setValue(value);
     }
 
-     public StringProperty getToStringProperty() {
+    public StringProperty getToStringProperty() {
         return toStringProperty;
     }
 
