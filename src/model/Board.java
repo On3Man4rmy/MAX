@@ -2,10 +2,7 @@ package model;
 
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.util.ArrayList;
+import javafx.scene.paint.Color;
 
 /**
  * Output class
@@ -30,14 +27,18 @@ public class Board implements Observable {
     public void update(Player p1, Player p2, Player currentPlayer, Matrix<Fraction> mat) {
         for(int y = MAX.START_Y; y <= MAX.END_Y; y++) {
             for(int x = MAX.START_X; x <= MAX.END_X; x++) {
+                var boardElement = boardElements[x-1][y-1];
                 if(p1.position.x == x && p1.position.y == y) {
-                    boardElements[x-1][y-1].setTextProperty(p1.getShortName());
+                    boardElement.setTextProperty(p1.getShortName());
+                    boardElement.setFillProperty(p1.getFill());
                     mat.setValue(x,y,Fraction.ZERO);
                 } else if(p2.position.x == x && p2.position.y == y) {
-                    boardElements[x-1][y-1].setTextProperty(p2.getShortName());
+                    boardElement.setTextProperty(p2.getShortName());
+                    boardElement.setFillProperty(p2.getFill());
                     mat.setValue(x,y,Fraction.ZERO);
                 } else {
-                    boardElements[x-1][y-1].setTextProperty(mat.getValue(x,y).toString());
+                    boardElement.setTextProperty(mat.getValue(x,y).toString());
+                    boardElement.setFillProperty(Color.WHITE);
                 }
             }
         }
@@ -45,7 +46,7 @@ public class Board implements Observable {
 
 
     //TODO find better way than HTML
-    public static String draw(Player p1, Player p2, Player currentPlayer, Matrix<Fraction> mat) {
+    /*public static String draw(Player p1, Player p2, Player currentPlayer, Matrix<Fraction> mat) {
         StringBuilder s = new StringBuilder();
         s.append(String.join(
                 "\n",
@@ -97,7 +98,7 @@ public class Board implements Observable {
     }
     private static String playerScore(Player p){
         return p.getName() + " Score: " + p.score.floatValue();
-    }
+    }*/
 
     private static String currentPlayerInfo(Player p){
         return "Current Player: " + p.getName();
