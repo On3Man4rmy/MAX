@@ -34,4 +34,11 @@ public class MathUtil {
         }
         return randNum + i;
     }
+
+    // https://stackoverflow.com/a/33889423
+    public static double roundToDecimalPlaces(double value, int decimalPlaces)
+    {
+        double shift = Math.pow(10,decimalPlaces);
+        return Math.round(value*shift)/shift;
+    }
 }
