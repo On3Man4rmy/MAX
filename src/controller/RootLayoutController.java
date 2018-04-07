@@ -1,28 +1,32 @@
 package controller;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.layout.*;
 import model.Actions;
-import model.BoardElement;
 import model.MAX;
+import model.Player;
 import util.KeyboardEventPublisher;
-
-import java.awt.*;
-
-import static javafx.scene.input.KeyCode.SHIFT;
-import static model.Direction.*;
 
 public class RootLayoutController {
     @FXML
     GridPane rootLayout;
+    @FXML
+    GridPane playerScores;
+
 
     public void initialize() {
         GridPane playerMap = new GridPane();
         MAX game = new MAX();
+        Player player1 = game.player1;
+        Player player2 = game.player2;
+
+        PlayerScoreController playerScore1 = new PlayerScoreController(player1);
+        PlayerScoreController playerScore2 = new PlayerScoreController(player2);
+        playerScore1.setAlignment(Pos.BOTTOM_LEFT);
+        playerScore2.setAlignment(Pos.TOP_LEFT);
+
 
         for(int i = 0; i < 8; i++) {
             RowConstraints row = new RowConstraints();
@@ -38,6 +42,7 @@ public class RootLayoutController {
             }
         }
 
+
         KeyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
                 case UP:    game.enterAction(Actions.UP); break;
@@ -47,6 +52,8 @@ public class RootLayoutController {
             }
         });
 
+        playerScores.add(playerScore1, 0,0);
+        playerScores.add(playerScore2, 0,1);
         rootLayout.add(playerMap, 0, 1);
     }
 }
