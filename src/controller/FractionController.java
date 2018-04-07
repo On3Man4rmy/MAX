@@ -28,7 +28,8 @@ public class FractionController extends VBox {
         }
 
         alignmentProperty().set(Pos.CENTER);
-        lblFraction.textProperty().bindBidirectional(boardElement.getTextProperty());
+        lblFraction.textProperty().bind(boardElement.getTextProperty());
+        lblFraction.textFillProperty().bind(boardElement.getFillProperty());
     }
 
     @FXML
