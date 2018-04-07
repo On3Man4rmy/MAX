@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.paint.Color;
 import util.MathUtil;
 
 import java.io.BufferedReader;
@@ -28,8 +29,8 @@ public class MAX {
     public static final Fraction SCORE_TARGET = new Fraction(80, 1);
     public static Fraction sum = new Fraction(0,1);
     public Matrix<Fraction> mat = initMatrix();
-    public Player player1 = new Player(new Position(4, 4), "red", "R");
-    public Player player2 = new Player(new Position(5, 5), "green", "G");
+    public Player player1 = new Player(new Position(4, 4), "red", "R", Color.web("#fec500"));
+    public Player player2 = new Player(new Position(5, 5), "green", "G", Color.web("#d00202"));
     Player currentPlayer = player1;
     Player otherPlayer = player2;
     public Board board = new Board();
@@ -58,6 +59,38 @@ public class MAX {
                 && currentPlayer.position.x < END_X
                 && !isSamePosition(currentPlayer.peekDirection(Direction.RIGHT), otherPlayer)) {
             currentPlayer.moveDirection(Direction.RIGHT);
+        }
+
+        // Update player score
+        currentPlayer.setScore(currentPlayer.getScore().add(mat.getValue(currentPlayer.position.x, currentPlayer.position.y)));
+        // Update score of remaining playing field points
+        sum = sum.subtract(mat.getValue(currentPlayer.position.x, currentPlayer.position.y));
+        // When player arrives field set field value to 0
+        mat.setValue(currentPlayer.position.x, currentPlayer.position.y, Fraction.ZERO);
+
+        // Rotate current player
+        if (currentPlayer == player1) {
+            currentPlayer = player2;
+            otherPlayer = player1;
+        } else {
+            currentPlayer = player1;
+            otherPlayer = player2;
+        }
+
+        // Announce winner
+        if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
+            System.out.println(player1.getName() + " wins!" );
+        }
+        if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
+            System.out.println(player2.getName() + " wins!");
+        }
+        // Announce tie
+        if(sum.equals(Fraction.ZERO)){
+            int i=player1.getScore().compareTo(player2.getScore());
+            if(i==0) System.out.println("Unentschieden");
+            else {
+                System.out.println(i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!");
+            }
         }
 
         board.update(player1, player2, currentPlayer, mat);
