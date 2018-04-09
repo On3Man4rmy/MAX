@@ -18,5 +18,16 @@
         <font>
             <Font size="22.0" />
         </font>
+        <HBox.margin>
+            <Insets right="10.0" />
+        </HBox.margin>
+    </Label>
+    <Label fx:id="lblSelected">
+        <font>
+            <Font size="22.0" />
+        </font>
+        <HBox.margin>
+            <Insets right="20.0" />
+        </HBox.margin>
     </Label>
 </fx:root>

@@ -1,9 +1,6 @@
 package model;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -37,7 +34,7 @@ public class Player {
     }
 
     // Score
-    ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
+    private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
     public void setScore(Fraction score) {
         this.score.set(score);
     }
@@ -48,6 +45,13 @@ public class Player {
         return score;
     }
 
+    // Selected
+    private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
+    public Boolean isSelected() { return isSelectedProperty.get(); }
+    public BooleanProperty isSelectedProperty() { return isSelectedProperty; }
+    public void setIsSelectedProperty(Boolean selected) { isSelectedProperty.set(selected); }
+
+    // Fill
     public ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
     public Paint getFill() { return fillProperty.get(); }
     public ObjectProperty<Paint> getFillProperty() {

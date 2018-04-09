@@ -29,14 +29,15 @@ public class MAX {
     public static final Fraction SCORE_TARGET = new Fraction(80, 1);
     public static Fraction sum = new Fraction(0,1);
     public Matrix<Fraction> mat = initMatrix();
-    public Player player1 = new Player(new Position(4, 4), "red", "R", Color.web("#fec500"));
-    public Player player2 = new Player(new Position(5, 5), "green", "G", Color.web("#d00202"));
+    public Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202"));
+    public Player player2 = new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500"));
     Player currentPlayer = player1;
     Player otherPlayer = player2;
     public Board board = new Board();
 
     public MAX() {
         board.update(player1, player2, currentPlayer, mat);
+        currentPlayer.setIsSelectedProperty(true);
     }
 
     public void enterAction(Actions action) {
@@ -76,6 +77,8 @@ public class MAX {
             currentPlayer = player1;
             otherPlayer = player2;
         }
+        currentPlayer.setIsSelectedProperty(true);
+        otherPlayer.setIsSelectedProperty(false);
 
         // Announce winner
         if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {

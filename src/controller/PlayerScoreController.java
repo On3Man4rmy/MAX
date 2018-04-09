@@ -1,12 +1,9 @@
 package controller;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
-import model.Fraction;
 import model.Player;
 import util.MathUtil;
 
@@ -17,6 +14,8 @@ public class PlayerScoreController extends HBox {
     private Label lblPlayerName;
     @FXML
     private Label lblPlayerScore;
+    @FXML
+    private Label lblSelected;
 
     public PlayerScoreController(Player player) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/PlayerScoreView.fxml"));
@@ -35,6 +34,19 @@ public class PlayerScoreController extends HBox {
             lblPlayerScore.setText(String.valueOf(MathUtil.roundToDecimalPlaces(newValue.doubleValue(), 2)));
         });
         lblPlayerScore.textFillProperty().bind(player.getFillProperty());
+        lblSelected.textFillProperty().bind(player.getFillProperty());
+        if(player.isSelected()) {
+            lblSelected.setText("◄");
+        } else {
+            lblSelected.setText("");
+        }
+        player.isSelectedProperty().addListener((observable, oldValue, selected) -> {
+            if(selected) {
+                lblSelected.setText("◄");
+            } else {
+                lblSelected.setText("");
+            }
+        });
     }
 
     @FXML
