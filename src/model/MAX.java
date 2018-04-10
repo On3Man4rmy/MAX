@@ -1,6 +1,7 @@
 package model;
 
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import util.MathUtil;
 
 
@@ -9,7 +10,6 @@ import util.MathUtil;
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
-
 public class MAX {
 
     // Variables for playing ground properties
@@ -26,6 +26,7 @@ public class MAX {
     Player otherPlayer = player2;
     public Board board = new Board();   //Spielbrett
     public boolean changePlayer =true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
+    private Stage stage;
 
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
@@ -65,6 +66,7 @@ public class MAX {
         else if(action == Actions.QUIT){  //Bei Q wird spiel beendet
             EndGame end=new EndGame(spielstand());
             end.endgame();
+            stage.hide();
 
         }
         else{changePlayer=false;}    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe
@@ -95,6 +97,7 @@ public class MAX {
                 sum.equals(Fraction.ZERO)) {
             EndGame end=new EndGame(spielstand());
             end.endgame();
+            stage.hide();
         }
         /*
         if () {
@@ -170,6 +173,10 @@ public class MAX {
         // Output sum for debugging purposes
         //System.out.println(mat.reduce((acc, curr) -> acc.add(curr), Fraction.DEFAULT).intValue());
         return mat;
+    }
+
+    public void setStage(Stage stage){
+        this.stage = stage;
     }
 }
 

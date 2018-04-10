@@ -3,6 +3,7 @@ package controller;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
 import model.Actions;
 import model.MAX;
 import model.Player;
@@ -14,11 +15,12 @@ public class RootLayoutController {
     @FXML
     GridPane playerScores;
     public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher();
+    MAX game;
 
 
     public void initialize() {
         GridPane playerMap = new GridPane();
-        MAX game = new MAX();
+        game = new MAX();
         Player player1 = game.player1;
         Player player2 = game.player2;
 
@@ -56,5 +58,9 @@ public class RootLayoutController {
         playerScores.add(playerScore1, 0,0);
         playerScores.add(playerScore2, 0,1);
         rootLayout.add(playerMap, 0, 1);
+    }
+
+    public void setStage(Stage stage) {
+        game.setStage(stage);
     }
 }

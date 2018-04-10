@@ -32,11 +32,11 @@ public class MAXAPP extends Application {
                             "view/RootLayout.fxml"));
                     root =loader.load();
                     controller=loader.getController();  //gibt zugang zu RootLayoutCOntroller objekt
+                    controller.setStage(stage);
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
 
                 Scene scene = new Scene(root, 500, 500);
                 scene.setOnKeyPressed(controller.keyboardEventPublisher::publish);  //onkeypressed wird die funktion publish ausgeführt
