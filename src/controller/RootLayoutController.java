@@ -14,6 +14,7 @@ public class RootLayoutController {
     GridPane rootLayout;
     @FXML
     GridPane playerScores;
+    public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher();
 
 
     public void initialize() {
@@ -43,12 +44,13 @@ public class RootLayoutController {
         }
 
 
-        KeyboardEventPublisher.subscribe(event -> {
+        keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
                 case UP:    game.enterAction(Actions.UP); break;
                 case DOWN:  game.enterAction(Actions.DOWN); break;
                 case LEFT:  game.enterAction(Actions.LEFT); break;
                 case RIGHT: game.enterAction(Actions.RIGHT); break;
+                case Q: game.enterAction(Actions.QUIT); break;
             }
         });
 

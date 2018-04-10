@@ -59,6 +59,11 @@ public class MAX {
                 && !isSamePosition(currentPlayer.peekDirection(Direction.RIGHT), otherPlayer)) {
             currentPlayer.moveDirection(Direction.RIGHT);
         }
+        else if(action == Actions.QUIT){
+            EndGame end=new EndGame(spielstand());
+            end.endgame();
+
+        }
         else{changePlayer=false;}
 
         // Update player score
@@ -100,6 +105,26 @@ public class MAX {
         board.update(player1, player2, currentPlayer, mat);
     }
 
+    public String spielstand() {
+        String ergebniss = "";
+
+        if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
+            ergebniss += (player1.getName() + " wins!\n");
+        }
+        if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
+            ergebniss += (player2.getName() + " wins!\n");
+        }
+        // Announce tie
+        if (sum.equals(Fraction.ZERO)) {
+            int i = player1.getScore().compareTo(player2.getScore());
+            if (i == 0) System.out.println("Unentschieden");
+            else {
+                ergebniss += (i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!\n");
+            }
+        }
+
+        return ergebniss;
+    }
     public void run(){
                launch();
     }

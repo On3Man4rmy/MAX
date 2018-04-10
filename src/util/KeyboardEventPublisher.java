@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 public class KeyboardEventPublisher {
-    private static ArrayList<Consumer<KeyEvent>> callbacks = new ArrayList<>();
+    private  ArrayList<Consumer<KeyEvent>> callbacks = new ArrayList<>();
 
-    public static void subscribe(Consumer<KeyEvent> callback) {
+    public  void subscribe(Consumer<KeyEvent> callback) {
         callbacks.add(callback);
     }
 
-    public static void publish(KeyEvent event) {
+    public void publish(KeyEvent event) {
         for(Consumer<KeyEvent> callback : callbacks) {
             callback.accept(event);
         }

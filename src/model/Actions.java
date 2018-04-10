@@ -1,5 +1,5 @@
 package model;
 
 public enum Actions {
-    UP, DOWN, LEFT, RIGHT
+    UP, DOWN, LEFT, RIGHT, QUIT
 }
