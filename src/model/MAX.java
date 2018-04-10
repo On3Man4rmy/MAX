@@ -49,23 +49,23 @@ public class MAX {
              */
         if (action == Actions.UP
                 && currentPlayer.position.y > START_Y
-                && !isSamePosition(currentPlayer.peekDirection(Direction.UP), otherPlayer)) {
-            currentPlayer.moveDirection(Direction.UP);
+                && !isSamePosition(currentPlayer.peekDirection(Actions.UP), otherPlayer)) {
+            currentPlayer.moveDirection(Actions.UP);
         }
         else if (action == Actions.LEFT
                 && currentPlayer.position.x > START_X
-                && !isSamePosition(currentPlayer.peekDirection(Direction.LEFT), otherPlayer)) {
-            currentPlayer.moveDirection(Direction.LEFT);
+                && !isSamePosition(currentPlayer.peekDirection(Actions.LEFT), otherPlayer)) {
+            currentPlayer.moveDirection(Actions.LEFT);
         }
         else if (action == Actions.DOWN
                 && currentPlayer.position.y < END_Y
-                && !isSamePosition(currentPlayer.peekDirection(Direction.DOWN), otherPlayer)) {
-            currentPlayer.moveDirection(Direction.DOWN);
+                && !isSamePosition(currentPlayer.peekDirection(Actions.DOWN), otherPlayer)) {
+            currentPlayer.moveDirection(Actions.DOWN);
         }
        else if (action == Actions.RIGHT
                 && currentPlayer.position.x < END_X
-                && !isSamePosition(currentPlayer.peekDirection(Direction.RIGHT), otherPlayer)) {
-            currentPlayer.moveDirection(Direction.RIGHT);
+                && !isSamePosition(currentPlayer.peekDirection(Actions.RIGHT), otherPlayer)) {
+            currentPlayer.moveDirection(Actions.RIGHT);
         }
         else if(action == Actions.QUIT){  //Bei Q wird spiel beendet
             EndGame end=new EndGame(spielstand());

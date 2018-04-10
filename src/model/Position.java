@@ -14,7 +14,7 @@ public class Position implements Comparable<Position> {
         this.y = y;
     }
 
-    public Position moveDirection(Direction direction) {
+    public Position moveDirection(Actions direction) {
         switch (direction) {
             case UP:
                 y--;
@@ -50,7 +50,7 @@ public class Position implements Comparable<Position> {
         return x == ((Position)obj).x && y == ((Position)obj).y;
     }
 
-    public Position peekDirection(Direction direction) {
+    public Position peekDirection(Actions direction) {
         return new Position(x, y).moveDirection(direction);
     }
 

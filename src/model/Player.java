@@ -85,12 +85,12 @@ public class Player {
         setFillProperty(color);
     }
 
-    public Player moveDirection(Direction direction) {
+    public Player moveDirection(Actions direction) {
         position.moveDirection(direction);
         return this;
     }
 
-    public Player peekDirection(Direction direction) {
+    public Player peekDirection(Actions direction) {
         return new Player(position.peekDirection(direction));
     }
 
