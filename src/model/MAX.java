@@ -3,11 +3,6 @@ package model;
 import javafx.scene.paint.Color;
 import util.MathUtil;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
-import static javafx.application.Application.launch;
 
 /**
  * MAX Game

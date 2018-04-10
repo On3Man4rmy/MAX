@@ -1,6 +1,5 @@
 package util;
 
-import javafx.event.Event;
 import javafx.scene.input.KeyEvent;
 
 import java.util.ArrayList;

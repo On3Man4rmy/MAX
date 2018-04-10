@@ -2,7 +2,6 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.layout.*;
 import model.Actions;
 import model.MAX;
