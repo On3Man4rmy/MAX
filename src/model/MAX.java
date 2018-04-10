@@ -18,27 +18,35 @@ import static javafx.application.Application.launch;
 public class MAX {
 
     // Variables for playing ground properties
-    public static final int END_X = 8;
+    public static final int END_X = 8;  //Definiert die Ränder
     public static final int END_Y = 8;
     public static final int START_X = 1;
     public static final int START_Y = 1;
-    public static final Fraction SCORE_TARGET = new Fraction(80, 1);
-    public static Fraction sum = new Fraction(0,1);
-    public Matrix<Fraction> mat = initMatrix();
-    public Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202"));
+    public static final Fraction SCORE_TARGET = new Fraction(80, 1); //Zile sind 80 punkte
+    public static Fraction sum = new Fraction(0,1);  //Zählt die Punkte die noch übrig sind, bei 0 uentschieden
+    public Matrix<Fraction> mat = initMatrix(); //inititalisert Matrix mit Fraktions
+    public Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")); //Beide spieler definiert
     public Player player2 = new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500"));
-    Player currentPlayer = player1;
+    Player currentPlayer = player1; //Derzeiiger Spieler
     Player otherPlayer = player2;
-    public Board board = new Board();
-    public boolean changePlayer =true;
+    public Board board = new Board();   //Spielbrett
+    public boolean changePlayer =true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
 
+    /**
+     * Konstruktor, Board wird zum ersten Mal kreiert
+     *
+     */
     public MAX() {
         board.update(player1, player2, currentPlayer, mat);
         currentPlayer.setIsSelectedProperty(true);
     }
 
-    public void enterAction(Actions action) {
 
+        public void enterAction(Actions action) {  //Tasteneingabe
+
+            /**
+             * Bei eingabe von Pfeiltasten wird überprüft ob Wand oder anderer SPeiler im weg ist
+             */
         if (action == Actions.UP
                 && currentPlayer.position.y > START_Y
                 && !isSamePosition(currentPlayer.peekDirection(Direction.UP), otherPlayer)) {
@@ -59,12 +67,12 @@ public class MAX {
                 && !isSamePosition(currentPlayer.peekDirection(Direction.RIGHT), otherPlayer)) {
             currentPlayer.moveDirection(Direction.RIGHT);
         }
-        else if(action == Actions.QUIT){
+        else if(action == Actions.QUIT){  //Bei Q wird spiel beendet
             EndGame end=new EndGame(spielstand());
             end.endgame();
 
         }
-        else{changePlayer=false;}
+        else{changePlayer=false;}    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe
 
         // Update player score
         currentPlayer.setScore(currentPlayer.getScore().add(mat.getValue(currentPlayer.position.x, currentPlayer.position.y)));
@@ -87,53 +95,56 @@ public class MAX {
         }
         else{changePlayer=true;}
         // Announce winner
-        if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
-            System.out.println(player1.getName() + " wins!" );
+        if (player1.getScore().compareTo(SCORE_TARGET) >= 1||
+                player2.getScore().compareTo(SCORE_TARGET) >= 1||
+                sum.equals(Fraction.ZERO)) {
+            EndGame end=new EndGame(spielstand());
+            end.endgame();
         }
-        if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
+        /*
+        if () {
             System.out.println(player2.getName() + " wins!");
         }
         // Announce tie
-        if(sum.equals(Fraction.ZERO)){
+        if(){
             int i=player1.getScore().compareTo(player2.getScore());
             if(i==0) System.out.println("Unentschieden");
             else {
                 System.out.println(i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!");
             }
         }
+        */
 
-        board.update(player1, player2, currentPlayer, mat);
+        board.update(player1, player2, currentPlayer, mat);       //Spielbrett updaten
     }
 
-    public String spielstand() {
+    public String spielstand() {            //Erzeugt String mit Spielstand
         String ergebniss = "";
 
         if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
             ergebniss += (player1.getName() + " wins!\n");
         }
-        if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
+        else if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
             ergebniss += (player2.getName() + " wins!\n");
         }
-        // Announce tie
-        if (sum.equals(Fraction.ZERO)) {
-            int i = player1.getScore().compareTo(player2.getScore());
+        // Ende nicht durch Erreichen der Maxpunktzahl, entweder durch leeres Spielfeld, oder abbruch
+        else  {
+            int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte
             if (i == 0) System.out.println("Unentschieden");
-            else {
+            else {          //falls einer mehr Punkte hat als der andere
                 ergebniss += (i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!\n");
             }
         }
 
         return ergebniss;
     }
-    public void run(){
-               launch();
-    }
+
     // Check if players have the same position
     public static Boolean isSamePosition(Player p1, Player p2) {
         return p1.position.equals(p2.position);
     }
 
-    // Create Fraction with random (more or less) value
+    // Create Fraction with random value
     public static Fraction getGameFraction() {
         int minNumerator, maxNumerator, randomNumerator;
         int minDenominator, maxDenominator, randomDenominator;

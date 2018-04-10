@@ -11,15 +11,19 @@ import javafx.stage.Stage;
 import util.KeyboardEventPublisher;
 
 import java.io.IOException;
+/**
+Klasse dient zum Starten des spiels, erzeugt Fenster, von welchem mehrer Spielläufe gestartet werden können
 
+ */
 public class MAXAPP extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Button btOK = new Button("Start Game");
-        btOK.setOnAction(new EventHandler<ActionEvent>() {
+        Button bt = new Button("Start Game");
+        bt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //Erzeugt RootLayoutController über Rootlayout.fxml
                 Stage stage = new Stage();
                 Parent root=null;
                 RootLayoutController controller=null;
@@ -27,7 +31,7 @@ public class MAXAPP extends Application {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource(
                             "view/RootLayout.fxml"));
                     root =loader.load();
-                    controller=loader.getController();
+                    controller=loader.getController();  //gibt zugang zu RootLayoutCOntroller objekt
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -35,13 +39,13 @@ public class MAXAPP extends Application {
 
 
                 Scene scene = new Scene(root, 500, 500);
-                scene.setOnKeyPressed(controller.keyboardEventPublisher::publish);
+                scene.setOnKeyPressed(controller.keyboardEventPublisher::publish);  //onkeypressed wird die funktion publish ausgeführt
                 stage.setScene(scene);
                 stage.setTitle("MAX Game");
                 stage.show();
             }
         });
-        Scene scene = new Scene(btOK, 200, 250);
+        Scene scene = new Scene(bt, 200, 250);
         primaryStage.setTitle("MyJavaFX"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
