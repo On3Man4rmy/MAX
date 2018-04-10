@@ -46,7 +46,7 @@ public class MAXAPP extends Application {
             }
         });
         Scene scene = new Scene(bt, 200, 250);
-        primaryStage.setTitle("MyJavaFX"); // Set the stage title
+        primaryStage.setTitle("Start Game"); // Set the stage title
         primaryStage.setScene(scene); // Place the scene in the stage
         primaryStage.show(); // Display the stage
 

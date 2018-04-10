@@ -27,6 +27,8 @@ public class EndGame {
         stage.setScene(scene);
         stage.setTitle("Endstand");
         stage.show();
+
+
     }
 
 }
