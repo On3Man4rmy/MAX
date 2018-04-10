@@ -130,7 +130,7 @@ public class MAX {
         // Ende nicht durch Erreichen der Maxpunktzahl, entweder durch leeres Spielfeld, oder abbruch
         else  {
             int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte
-            if (i == 0) System.out.println("Unentschieden");
+            if (i == 0) ergebniss+=("Unentschieden\n");
             else {          //falls einer mehr Punkte hat als der andere
                 ergebniss += (i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!\n");
             }
