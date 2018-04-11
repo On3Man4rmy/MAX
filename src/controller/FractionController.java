@@ -6,7 +6,11 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import model.BoardElement;
-
+/**
+ * Controller für FractionView.fxml
+ * @author  Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
+ */
 import java.io.IOException;
 
 public class FractionController extends VBox {
@@ -31,9 +35,5 @@ public class FractionController extends VBox {
         lblFraction.textFillProperty().bind(boardElement.getFillProperty());
     }
 
-    @FXML
-    protected void doSomething() throws InterruptedException {
-        System.out.println("The button was clicked!");
-        wait();
-    }
+
 }

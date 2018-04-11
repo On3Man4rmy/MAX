@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 /**
- * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
 
@@ -63,20 +63,13 @@ public class Player {
 
     Position position;
 
-    Player (int posX, int posY) {
-        this.position = new Position(posX, posY);
-    }
+
 
     Player (Position position) {
         this.position = position;
     }
 
-    Player (Position position, String name, String shortName) {
-        this.position = position;
-        setName(name);
-        setShortName(shortName);
-        setFillProperty(Color.GRAY);
-    }
+
 
     Player (Position position, String name, String shortName, Color color) {
         this.position = position;
@@ -84,12 +77,13 @@ public class Player {
         setShortName(shortName);
         setFillProperty(color);
     }
-
+    //Bewegt den Spieler
     public Player moveDirection(Actions direction) {
         position.moveDirection(direction);
         return this;
     }
 
+    //gibt position des Spielers nach einer Bewegung
     public Player peekDirection(Actions direction) {
         return new Player(position.peekDirection(direction));
     }

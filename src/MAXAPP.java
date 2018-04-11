@@ -12,17 +12,20 @@ import util.KeyboardEventPublisher;
 
 import java.io.IOException;
 /**
-Klasse dient zum Starten des spiels, erzeugt Fenster, von welchem mehrer Spielläufe gestartet werden können
+ * Klasse dient zum Starten des spiels, erzeugt Fenster,
+ * von welchem mehrer Spielläufe gestartet werden können
+ * @author  Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
 
  */
 public class MAXAPP extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception{     //Erstellt window mit StartGame button
         Button bt = new Button("Start Game");
         bt.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {         //Startet Spiel bei Knopfdruck
                 //Erzeugt RootLayoutController über Rootlayout.fxml
                 Stage stage = new Stage();
                 Parent root=null;

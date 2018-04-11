@@ -6,9 +6,9 @@ import util.MathUtil;
 
 
 /**
- * MAX Game
- * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 2.0 08.01.2018
+ * MAX Game Hauptklasse
+ * @author  Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @version 3.0 11/7/2018
  */
 public class MAX {
 

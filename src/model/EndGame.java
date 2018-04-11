@@ -9,6 +9,11 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * Klasse dient zum anzeigen des SPielstands bei Spielende
+ *  @author  Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
+ */
 public class EndGame {
     String spielstand;
     EndGame(String spielstand){

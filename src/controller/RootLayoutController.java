@@ -8,14 +8,18 @@ import model.Actions;
 import model.MAX;
 import model.Player;
 import util.KeyboardEventPublisher;
-
+/**
+ * Controller für RootLayout.fxml
+ * @author  Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
+ */
 public class RootLayoutController {
     @FXML
     GridPane rootLayout;
     @FXML
     GridPane playerScores;
-    public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher();
-    MAX game;
+    public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher(); //erzeugt KeyBoardEventPublisher
+    MAX game;   //erzeugt MAXGame
 
 
     public void initialize() {
@@ -23,7 +27,7 @@ public class RootLayoutController {
         game = new MAX();
         Player player1 = game.player1;
         Player player2 = game.player2;
-
+        //erzeugtPlayerScoreCOntrollers
         PlayerScoreController playerScore1 = new PlayerScoreController(player1);
         PlayerScoreController playerScore2 = new PlayerScoreController(player2);
         playerScore1.setAlignment(Pos.BOTTOM_LEFT);

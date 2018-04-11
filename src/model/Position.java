@@ -2,18 +2,19 @@ package model;
 
 /**
  * Class representing 2D Coordinates
- * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @author  Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
 public class Position implements Comparable<Position> {
     int x;
     int y;
 
+    //Setzt Position
     public Position(int x, int y) {
         this.x = x;
         this.y = y;
     }
-
+    //bewegt position
     public Position moveDirection(Actions direction) {
         switch (direction) {
             case UP:
@@ -33,23 +34,13 @@ public class Position implements Comparable<Position> {
         return this;
     }
 
-    public Position add(Position pos) {
-        return new Position(this.x + pos.x, this.y + pos.y);
-    }
 
-    public Position subtract(Position pos) {
-        return new Position(this.x - pos.x, this.y - pos.y);
-    }
-
-    public int area() {
-        return x * y;
-    }
 
     @Override
     public boolean equals(Object obj) {
         return x == ((Position)obj).x && y == ((Position)obj).y;
     }
-
+    //gibt position nach möglicher bewegung
     public Position peekDirection(Actions direction) {
         return new Position(x, y).moveDirection(direction);
     }

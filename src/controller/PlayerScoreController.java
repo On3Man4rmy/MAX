@@ -7,6 +7,11 @@ import javafx.scene.layout.HBox;
 import model.Player;
 import util.MathUtil;
 
+/**
+ * Controller für PlayerScoreView.fxml
+ * @author  Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
+ */
 import java.io.IOException;
 
 public class PlayerScoreController extends HBox {

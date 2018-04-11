@@ -6,6 +6,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.scene.paint.Paint;
 
+/**
+ * Boardelemnte
+ * @author  Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @version 1.0 30.03.2018
+ */
 public class BoardElement {
     private StringProperty text = new SimpleStringProperty();
     public StringProperty getTextProperty() {

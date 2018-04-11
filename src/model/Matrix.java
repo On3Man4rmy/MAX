@@ -5,8 +5,8 @@ import java.util.function.*;
 
 /**
  * Matrix to represent playing field filled with fractions
- * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 2.0 08.01.2018
+ * @author Tobias Fetzer 198318, Simon Stratemeier 199067
+ * @version 3.0 11/04/2018
  */
 public class Matrix<T> {
     T[][] data;
