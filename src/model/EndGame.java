@@ -19,10 +19,9 @@ public class EndGame {
         Pane pane = new Pane();
         pane.setPadding(new Insets(5, 5, 5, 5));
         Text text1 = new Text(20, 20,spielstand);
-        text1.setFill(Color.YELLOWGREEN);
         text1.setFont(Font.font("Courier", FontWeight.BOLD, 15));
         pane.getChildren().add(text1);
-        Scene scene = new Scene(pane, 400, 500);
+        Scene scene = new Scene(pane, 300, 200);
         scene.setFill(Color.web("#27627F",1.0));
         stage.setScene(scene);
         stage.setTitle("Endstand");
