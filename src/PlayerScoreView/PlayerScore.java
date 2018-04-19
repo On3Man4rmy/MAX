@@ -1,4 +1,4 @@
-package controller;
+package PlayerScoreView;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ import java.io.IOException;
  *@author  Tobias Fetzer 198318, Simon Stratemeier 199067
  *@version 1.0 19/04/2018
  */
-public class PlayerScoreController extends HBox {
+public class PlayerScore extends HBox {
     @FXML
     private Label lblPlayerName;
     @FXML
@@ -27,8 +27,8 @@ public class PlayerScoreController extends HBox {
     @FXML
     private Label lblSelected;
 
-    public PlayerScoreController(Player player) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../view/PlayerScoreView.fxml"));
+    public PlayerScore(Player player) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PlayerScoreView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -59,6 +59,4 @@ public class PlayerScoreController extends HBox {
             }
         });
     }
-
-
 }
