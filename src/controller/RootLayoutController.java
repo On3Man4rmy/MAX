@@ -2,6 +2,8 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import model.Actions;
@@ -20,13 +22,25 @@ public class RootLayoutController {
     GridPane playerScores;
     @FXML
     VBox menu;
+    @FXML
+    Parent btnSave;
+    @FXML
+    Parent btnLoad;
     public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher(); //erzeugt KeyBoardEventPublisher
     public MAX game;   //erzeugt MAXGame
+    GridPane playerMap = new GridPane();
 
 
     public void initialize() {
-        GridPane playerMap = new GridPane();
-        game = new MAX();
+        loadGame(new MAX());
+    }
+
+    public void loadGame(MAX game) {
+         playerScores.getChildren().clear();
+         rootLayout.getChildren().remove(playerMap);
+
+        playerMap = new GridPane();
+        this.game = game;
         Player player1 = game.player1;
         Player player2 = game.player2;
         //erzeugtPlayerScoreCOntrollers
@@ -34,7 +48,6 @@ public class RootLayoutController {
         PlayerScoreController playerScore2 = new PlayerScoreController(player2);
         playerScore1.setAlignment(Pos.BOTTOM_LEFT);
         playerScore2.setAlignment(Pos.TOP_LEFT);
-
 
         for(int i = 0; i < 8; i++) {
             RowConstraints row = new RowConstraints();
@@ -50,7 +63,6 @@ public class RootLayoutController {
             }
         }
 
-
         keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
                 case UP:    game.enterAction(Actions.UP); break;
@@ -58,9 +70,9 @@ public class RootLayoutController {
                 case LEFT:  game.enterAction(Actions.LEFT); break;
                 case RIGHT: game.enterAction(Actions.RIGHT); break;
                 case Q: game.enterAction(Actions.QUIT); break;
+                case ESCAPE: toogleMenuVisibility(); break;
                 case S: game.enterAction(Actions.SAVE); break;
                 case L: game.enterAction(Actions.LOAD); break;
-                case ESCAPE: toogleMenuVisibility(); break;
             }
         });
 
@@ -74,14 +86,24 @@ public class RootLayoutController {
     }
 
     public void actionSaveGame() {
+        game.enterAction(Actions.SAVE);
         System.out.println("Save Game");
+        toogleMenuVisibility();
     }
 
     public void actionLoadGame() {
         System.out.println("Load Game");
+        game.enterAction(Actions.LOAD);
+        toogleMenuVisibility();
     }
 
     public void toogleMenuVisibility() {
-        menu.setVisible(!menu.isVisible());
+        if(menu.isVisible()) {
+            menu.setVisible(false);
+            rootLayout.setEffect(null);
+        } else {
+            menu.setVisible(true);
+            rootLayout.setEffect(new GaussianBlur());
+        }
     }
 }

@@ -9,22 +9,14 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #001824;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
+<AnchorPane  prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #001824;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
    <children>
-      <VBox fx:id="menu" alignment="CENTER" style="-fx-background-color: #001824; -fx-opacity: 1.0;" viewOrder="-1" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <Label onMouseClicked="#actionSaveGame" text="Save" textFill="WHITE">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
-            <Label onMouseClicked="#actionLoadGame" text="Load" textFill="WHITE">
-               <font>
-                  <Font size="50.0" />
-               </font>
-            </Label>
-         </children>
-      </VBox>
+       <VBox fx:id="menu" alignment="CENTER" style="background-color: transparent;" viewOrder="-1"
+             visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+             AnchorPane.topAnchor="0.0">
+           <fx:include fx:id="btnSave" source="MenuButtonView.fxml" text="Save" onMouseClicked="#actionSaveGame"/>
+           <fx:include fx:id="btnLoad" source="MenuButtonView.fxml" text="Load" onMouseClicked="#actionLoadGame"/>
+       </VBox>
       <GridPane fx:id="rootLayout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
