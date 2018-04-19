@@ -76,13 +76,17 @@ public class MAX implements Serializable {
         } else if (action == Actions.LOAD) {
             Stage stage =new Stage();
             final FileChooser fileChooser = new FileChooser();
+            fileChooser.setInitialDirectory(new File("./"));
             File file= fileChooser.showOpenDialog(stage);
-            SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
-            MAX newGame = load.loadGame(file,this);
-            controller.loadGame(newGame);
+            if(file!=null) {
+                SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
+                MAX newGame = load.loadGame(file, this);
+                controller.loadGame(newGame);
 
+                System.out.println("game loaded");
+            }
             changePlayer = false;
-            System.out.println("game loaded");
+
         } else if (action == Actions.SAVE) {
             SaveLoadGame save = new SaveLoadGame(player1, player2, this, currentPlayer);
             save.saveGame();
