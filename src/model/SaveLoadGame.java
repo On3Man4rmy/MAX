@@ -57,10 +57,12 @@ public class SaveLoadGame implements Serializable{
      * Speichert das Spiel
      */
     public void saveGame(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         Date date = new Date();
+        String filename="Max "+dateFormat.format(date)+".ser";
+        System.out.println("Savegame saved as: "+filename);
         try {
-            FileOutputStream fileout=new FileOutputStream("Max.ser");
+            FileOutputStream fileout=new FileOutputStream(filename);
             ObjectOutputStream objout =new ObjectOutputStream(fileout);
             objout.writeObject(this);
             objout.close();
@@ -68,9 +70,9 @@ public class SaveLoadGame implements Serializable{
             System.err.println (e);
         }
     }
-    public MAX loadGame( MAX oldGame){
+    public MAX loadGame(File file,MAX oldGame){
         try {
-            FileInputStream inputFile = new FileInputStream("Max.ser");
+            FileInputStream inputFile = new FileInputStream(file);
             ObjectInputStream objIn=new ObjectInputStream(inputFile);
 
             try {

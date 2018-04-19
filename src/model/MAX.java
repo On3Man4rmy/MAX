@@ -3,9 +3,11 @@ package model;
 import controller.PlayerScoreController;
 import controller.RootLayoutController;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import util.MathUtil;
 
+import java.io.File;
 import java.io.Serializable;
 
 
@@ -72,8 +74,11 @@ public class MAX implements Serializable {
             stage.hide();
 
         } else if (action == Actions.LOAD) {
+            Stage stage =new Stage();
+            final FileChooser fileChooser = new FileChooser();
+            File file= fileChooser.showOpenDialog(stage);
             SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
-            MAX newGame = load.loadGame(this);
+            MAX newGame = load.loadGame(file,this);
             controller.loadGame(newGame);
 
             changePlayer = false;
@@ -82,7 +87,6 @@ public class MAX implements Serializable {
             SaveLoadGame save = new SaveLoadGame(player1, player2, this, currentPlayer);
             save.saveGame();
             changePlayer = false;
-            System.out.println("Game saved");
         } else {
             changePlayer = false;
         }    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe

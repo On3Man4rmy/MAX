@@ -100,5 +100,5 @@ public class Player implements Serializable{
         return this.getShortName();
     }
 
-
+    
 }
