@@ -75,6 +75,8 @@ public class RootLayoutController {
                 case L: game.enterAction(Actions.LOAD); break;
             }
         });
+        menu.toFront();
+
 
         playerScores.add(playerScore1, 0,0);
         playerScores.add(playerScore2, 0,1);
