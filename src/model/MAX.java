@@ -76,9 +76,6 @@ public class MAX implements Serializable {
             currentPlayer.moveDirection(Actions.RIGHT);
         } else if (action == Actions.QUIT) {  //Bei Q wird spiel beendet
             isGameDone.setValue(true);
-            //EndGame end = new EndGame(spielstand());
-            //end.endgame();
-            //stage.hide();
 
             //Bei L eingabe wird der FileLoader feöffnet, und ein Savegame kann gewäählt werden
         } else if (action == Actions.LOAD) {
@@ -131,34 +128,12 @@ public class MAX implements Serializable {
                 player2.getScore().compareTo(SCORE_TARGET) >= 1 ||
                 sum.compareTo(Fraction.ZERO) <= 0) {
             isGameDone.setValue(true);
-           // EndGame end = new EndGame(spielstand());
-            //end.endgame();
-            //stage.hide();
         }
 
 
         board.update(player1, player2, currentPlayer, mat);       //Spielbrett updaten
     }
 
-    public String spielstand() {            //Erzeugt String mit Spielstand
-        String ergebniss = "";
-
-        if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
-            ergebniss += (player1.getName() + " wins!\n");
-        } else if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
-            ergebniss += (player2.getName() + " wins!\n");
-        }
-        // Ende nicht durch Erreichen der Maxpunktzahl, entweder durch leeres Spielfeld, oder abbruch
-        else {
-            int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte
-            if (i == 0) ergebniss += ("Unentschieden\n");
-            else {          //falls einer mehr Punkte hat als der andere
-                ergebniss += (i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!\n");
-            }
-        }
-
-        return ergebniss;
-    }
 
     public Player getWinner() {            //Erzeugt String mit Spielstand
         int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte

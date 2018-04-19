@@ -1,15 +1,12 @@
 package GameWindow;
 
-import Fraction.FractionController;
 import App.App;
+import Fraction.FractionController;
 import PlayerScoreView.PlayerScore;
 import WinnerInformation.WinnerInformation;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuButton;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -83,19 +80,6 @@ public class GamePane extends AnchorPane {
                 playerMap.add(fractionView, i, j);
             }
         }
-
-        /*
-        MenuButton btnSave = new MenuButton("Save");
-        MenuButton btnLoad = new MenuButton("Load");
-        MenuButton btnNewGame = new MenuButton("New Game");
-        btnSave.setOnMouseClicked(event -> actionSaveGame());
-        btnLoad.setOnMouseClicked(event -> actionLoadGame());
-        btnNewGame.setOnMouseClicked(event -> actionNewGame());
-        menu.getChildren().clear();
-        menu.getChildren().add(btnSave);
-        menu.getChildren().add(btnLoad);
-        menu.getChildren().add(btnNewGame);
-        */
 
         keyboardEventPublisher = new KeyboardEventPublisher();
         keyboardEventPublisher.subscribe(event -> {
