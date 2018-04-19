@@ -111,19 +111,6 @@ public class MAX implements Serializable {
             end.endgame();
             stage.hide();
         }
-        /*
-        if () {
-            System.out.println(player2.getName() + " wins!");
-        }
-        // Announce tie
-        if(){
-            int i=player1.getScore().compareTo(player2.getScore());
-            if(i==0) System.out.println("Unentschieden");
-            else {
-                System.out.println(i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!");
-            }
-        }
-        */
 
 
         board.update(player1, player2, currentPlayer, mat);       //Spielbrett updaten
@@ -195,7 +182,6 @@ public class MAX implements Serializable {
     public void loadnewValues(Player player1, Player player2, Matrix<Fraction> mat) {
 
         this.player1 = player1;
-        System.out.println(player1.getScore());
         this.player2 = player2;
         this.mat = mat;
         currentPlayer = player1;
