@@ -18,6 +18,8 @@ public class RootLayoutController {
     GridPane rootLayout;
     @FXML
     GridPane playerScores;
+    @FXML
+    VBox menu;
     public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher(); //erzeugt KeyBoardEventPublisher
     MAX game;   //erzeugt MAXGame
 
@@ -56,6 +58,7 @@ public class RootLayoutController {
                 case LEFT:  game.enterAction(Actions.LEFT); break;
                 case RIGHT: game.enterAction(Actions.RIGHT); break;
                 case Q: game.enterAction(Actions.QUIT); break;
+                case ESCAPE: toogleMenuVisibility(); break;
             }
         });
 
@@ -74,5 +77,9 @@ public class RootLayoutController {
 
     public void actionLoadGame() {
         System.out.println("Load Game");
+    }
+
+    public void toogleMenuVisibility() {
+        menu.setVisible(!menu.isVisible());
     }
 }
