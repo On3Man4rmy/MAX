@@ -14,6 +14,11 @@ import util.MathUtil;
  */
 import java.io.IOException;
 
+/**
+ * Controller für anzeige der Scores
+ *@author  Tobias Fetzer 198318, Simon Stratemeier 199067
+ *@version 1.0 19/04/2018
+ */
 public class PlayerScoreController extends HBox {
     @FXML
     private Label lblPlayerName;

@@ -59,7 +59,7 @@ public class SaveLoadGame implements Serializable{
     public void saveGame(){
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
         Date date = new Date();
-        String filename="Max "+dateFormat.format(date)+".ser";
+        String filename="Max "+dateFormat.format(date)+".ser";  //Dateiname beinhalted erstelldatum
         System.out.println("Savegame saved as: "+filename);
         try {
             FileOutputStream fileout=new FileOutputStream(filename);
@@ -70,6 +70,12 @@ public class SaveLoadGame implements Serializable{
             System.err.println (e);
         }
     }
+
+    /**
+     * Lade das spiel
+     * @param file  Der zu ladende Spielstand
+     * @param oldGame   Referenze zum aktuellen SPeilstand
+     */
     public MAX loadGame(File file,MAX oldGame){
         try {
             FileInputStream inputFile = new FileInputStream(file);
@@ -80,12 +86,15 @@ public class SaveLoadGame implements Serializable{
                 player1=saveState.player1;
                 player2=saveState.player2;
 
+                //Spielerobjekte basierend auf gespeicherten Daten erstellen
                 Player p1=new Player((Position)player1[0],(String)player1[1],(String)player1[2], Color.web((String)player1[3]));
                 Player p2=new Player((Position)player2[0],(String)player2[1],(String)player2[2], Color.web((String)player2[3]));
 
+                //Spielerscore setzen
                 p1.setScore((Fraction)player1[4]);
                 p2.setScore((Fraction)player2[4]);
 
+                //Spielupdaten, unterscheidung ob Player 1 oder zwei am Zug sind
                 if((boolean)player1[5]==true) {
                     oldGame.loadnewValues(p1,p2,saveState.game.mat);
                 }

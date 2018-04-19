@@ -15,7 +15,7 @@ import java.io.Serializable;
  * MAX Game Hauptklasse
  *
  * @author Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 3.0 11/7/2018
+ * @version 4.0 19/04/2018
  */
 public class MAX implements Serializable {
 
@@ -73,12 +73,14 @@ public class MAX implements Serializable {
             end.endgame();
             stage.hide();
 
+            //Bei L eingabe wird der FileLoader feöffnet, und ein Savegame kann gewäählt werden
         } else if (action == Actions.LOAD) {
             Stage stage =new Stage();
             final FileChooser fileChooser = new FileChooser();
-            fileChooser.setInitialDirectory(new File("./"));
+            fileChooser.setInitialDirectory(new File("./"));    //start Directory
             File file= fileChooser.showOpenDialog(stage);
-            if(file!=null) {
+            if(file!=null) {                    //wenn der Loader nicht geschlossen wird
+                //load new and update controller
                 SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
                 MAX newGame = load.loadGame(file, this);
                 controller.loadGame(newGame);
@@ -87,7 +89,8 @@ public class MAX implements Serializable {
             }
             changePlayer = false;
 
-        } else if (action == Actions.SAVE) {
+
+        } else if (action == Actions.SAVE) {                //Save game
             SaveLoadGame save = new SaveLoadGame(player1, player2, this, currentPlayer);
             save.saveGame();
             changePlayer = false;

@@ -9,7 +9,7 @@ import java.math.BigInteger;
 
 /**
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 2.0 08.01.2018
+ * @version 3.0 19/04/18
  */
 public class Fraction extends Number implements Comparable<Fraction>, Serializable {
     transient StringProperty toStringProperty = new SimpleStringProperty();

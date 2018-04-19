@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Class representing 2D Coordinates
  * @author  Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 2.0 08.01.2018
+ * @version 3.0 19/04/2018
  */
 public class Position implements Comparable<Position>, Serializable {
     int x;

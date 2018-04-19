@@ -7,7 +7,7 @@ import java.util.function.*;
 /**
  * Matrix to represent playing field filled with fractions
  * @author Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 3.0 11/04/2018
+ * @version 4.0 19/04/2018
  */
 public class Matrix<T> implements Serializable{
     T[][] data;
