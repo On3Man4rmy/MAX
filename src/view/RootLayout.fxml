@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -12,6 +11,20 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #001824;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
    <children>
+      <VBox fx:id="menu" alignment="CENTER" style="-fx-background-color: #001824; -fx-opacity: 1.0;" viewOrder="-1" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label onMouseClicked="#actionSaveGame" text="Save" textFill="WHITE">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+            <Label onMouseClicked="#actionLoadGame" text="Load" textFill="WHITE">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
       <GridPane fx:id="rootLayout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
@@ -22,9 +35,9 @@
          </rowConstraints>
          <GridPane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <columnConstraints>
-               <ColumnConstraints hgrow="ALWAYS" maxWidth="152.0" minWidth="10.0" prefWidth="152.0" />
-               <ColumnConstraints hgrow="ALWAYS" maxWidth="469.0" minWidth="10.0" prefWidth="327.0" />
-               <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+               <ColumnConstraints hgrow="NEVER" />
+               <ColumnConstraints hgrow="SOMETIMES" />
+               <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
             </columnConstraints>
             <rowConstraints>
                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
@@ -46,13 +59,6 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
-            <VBox prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button mnemonicParsing="false" onAction="#actionSaveGame" text="Save" />
-                  <Button mnemonicParsing="false" onAction="#actionLoadGame" text="Load" />
-               </children>
-            </VBox>
-           <!-- <Button mnemonicParsing="false" onAction="#openNewGame" style="-fx-background-color: #003d50; -fx-text-fill: #eee; -fx-border-radius: 0;" text="New Game" GridPane.halignment="LEFT" GridPane.valignment="TOP" />-->
          </GridPane>
       </GridPane>
    </children>
