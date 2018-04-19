@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 
 <?import javafx.scene.text.Font?>
-<Label stylesheets="@MenuButtonView.css" fx:controller="controller.MenuButtonController" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9" textFill="WHITE">
+<Label stylesheets="@MenuButtonView.css" fx:controller="controller.MenuButtonController" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" textFill="WHITE">
         <font>
             <Font size="50.0" />
         </font>
