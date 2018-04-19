@@ -7,6 +7,7 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #001824;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
@@ -21,13 +22,14 @@
          </rowConstraints>
          <GridPane GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <columnConstraints>
-               <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+               <ColumnConstraints hgrow="ALWAYS" maxWidth="152.0" minWidth="10.0" prefWidth="152.0" />
+               <ColumnConstraints hgrow="ALWAYS" maxWidth="469.0" minWidth="10.0" prefWidth="327.0" />
                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
             </columnConstraints>
             <rowConstraints>
                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
             </rowConstraints>
-            <Label style="-fx-text-fill: #27627F;" text="MAX" textFill="#27627f" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
+            <Label style="-fx-text-fill: #fff;" text="MAX" textFill="#fff" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.valignment="CENTER">
                <font>
                   <Font size="83.0" />
                </font>
@@ -35,7 +37,7 @@
                   <Insets right="10.0" />
                </GridPane.margin>
             </Label>
-            <GridPane fx:id="playerScores" GridPane.columnIndex="1">
+            <GridPane fx:id="playerScores" GridPane.columnIndex="2">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -44,6 +46,12 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
             </GridPane>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#actionSaveGame" text="Save" />
+                  <Button mnemonicParsing="false" onAction="#actionLoadGame" text="Load" />
+               </children>
+            </VBox>
            <!-- <Button mnemonicParsing="false" onAction="#openNewGame" style="-fx-background-color: #003d50; -fx-text-fill: #eee; -fx-border-radius: 0;" text="New Game" GridPane.halignment="LEFT" GridPane.valignment="TOP" />-->
          </GridPane>
       </GridPane>

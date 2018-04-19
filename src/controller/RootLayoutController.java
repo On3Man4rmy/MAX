@@ -67,4 +67,12 @@ public class RootLayoutController {
     public void setStage(Stage stage) {
         game.setStage(stage);
     }
+
+    public void actionSaveGame() {
+        System.out.println("Save Game");
+    }
+
+    public void actionLoadGame() {
+        System.out.println("Load Game");
+    }
 }
