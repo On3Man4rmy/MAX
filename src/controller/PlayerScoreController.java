@@ -54,9 +54,5 @@ public class PlayerScoreController extends HBox {
         });
     }
 
-    @FXML
-    protected void doSomething() throws InterruptedException {
-        System.out.println("The button was clicked!");
-        wait();
-    }
+
 }

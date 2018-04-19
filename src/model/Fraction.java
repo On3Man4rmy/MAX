@@ -4,15 +4,20 @@ package model;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 
 /**
  * @author Melanie Krugel 198991, Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
-public class Fraction extends Number implements Comparable<Fraction> {
-    StringProperty toStringProperty = new SimpleStringProperty();
+public class Fraction extends Number implements Comparable<Fraction>, Serializable {
+    transient StringProperty toStringProperty = new SimpleStringProperty();
+    public static final Fraction ZERO = new Fraction(0,1);
+    public static final Fraction DEFAULT = new Fraction(0,1);
 
+    private BigInteger numerator = BigInteger.ZERO;
+    private BigInteger denominator = BigInteger.ZERO;
     public void setToStringProperty(String value) {
         toStringProperty.setValue(value);
     }
@@ -21,11 +26,7 @@ public class Fraction extends Number implements Comparable<Fraction> {
         return toStringProperty;
     }
 
-    public static final Fraction ZERO = new Fraction(0,1);
-    public static final Fraction DEFAULT = new Fraction(0,1);
 
-    private BigInteger numerator = BigInteger.ZERO;
-    private BigInteger denominator = BigInteger.ZERO;
 
     private void setNumerator(BigInteger numerator) {
         if(!this.numerator.equals(numerator)) {

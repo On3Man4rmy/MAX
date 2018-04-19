@@ -7,5 +7,5 @@ package model;
  */
 
 public enum Actions {
-    UP, DOWN, LEFT, RIGHT, QUIT
+    UP, DOWN, LEFT, RIGHT, QUIT, SAVE, LOAD
 }

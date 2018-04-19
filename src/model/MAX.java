@@ -4,13 +4,16 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.MathUtil;
 
+import java.io.Serializable;
+
 
 /**
  * MAX Game Hauptklasse
- * @author  Tobias Fetzer 198318, Simon Stratemeier 199067
+ *
+ * @author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 3.0 11/7/2018
  */
-public class MAX {
+public class MAX implements Serializable {
 
     // Variables for playing ground properties
     public static final int END_X = 8;  //Definiert die Ränder
@@ -18,58 +21,65 @@ public class MAX {
     public static final int START_X = 1;
     public static final int START_Y = 1;
     public static final Fraction SCORE_TARGET = new Fraction(80, 1); //Zile sind 80 punkte
-    public static Fraction sum = new Fraction(0,1);  //Zählt die Punkte die noch übrig sind, bei 0 uentschieden
+    public static Fraction sum = new Fraction(0, 1);  //Zählt die Punkte die noch übrig sind, bei 0 uentschieden
     public Matrix<Fraction> mat = initMatrix(); //inititalisert Matrix mit Fraktions
     public Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")); //Beide spieler definiert
     public Player player2 = new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500"));
-    Player currentPlayer = player1; //Derzeiiger Spieler
-    Player otherPlayer = player2;
-    public Board board = new Board();   //Spielbrett
-    public boolean changePlayer =true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
-    private Stage stage;
+    transient Player currentPlayer = player1; //Derzeiiger Spieler
+    transient Player otherPlayer = player2;
+    transient public Board board = new Board();   //Spielbrett
+    transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
+    transient private Stage stage;
 
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
-     *
      */
     public MAX() {
         board.update(player1, player2, currentPlayer, mat);
         currentPlayer.setIsSelectedProperty(true);
     }
 
+    public void enterAction(Actions action) {  //Tasteneingabe
 
-        public void enterAction(Actions action) {  //Tasteneingabe
-
-            /**
-             * Bei eingabe von Pfeiltasten wird überprüft ob Wand oder anderer SPeiler im weg ist
-             */
+        /**
+         * Bei eingabe von Pfeiltasten wird überprüft ob Wand oder anderer SPeiler im weg ist
+         */
         if (action == Actions.UP
                 && currentPlayer.position.y > START_Y
                 && !isSamePosition(currentPlayer.peekDirection(Actions.UP), otherPlayer)) {
             currentPlayer.moveDirection(Actions.UP);
-        }
-        else if (action == Actions.LEFT
+        } else if (action == Actions.LEFT
                 && currentPlayer.position.x > START_X
                 && !isSamePosition(currentPlayer.peekDirection(Actions.LEFT), otherPlayer)) {
             currentPlayer.moveDirection(Actions.LEFT);
-        }
-        else if (action == Actions.DOWN
+
+        } else if (action == Actions.DOWN
                 && currentPlayer.position.y < END_Y
                 && !isSamePosition(currentPlayer.peekDirection(Actions.DOWN), otherPlayer)) {
             currentPlayer.moveDirection(Actions.DOWN);
-        }
-       else if (action == Actions.RIGHT
+
+        } else if (action == Actions.RIGHT
                 && currentPlayer.position.x < END_X
                 && !isSamePosition(currentPlayer.peekDirection(Actions.RIGHT), otherPlayer)) {
             currentPlayer.moveDirection(Actions.RIGHT);
-        }
-        else if(action == Actions.QUIT){  //Bei Q wird spiel beendet
-            EndGame end=new EndGame(spielstand());
+        } else if (action == Actions.QUIT) {  //Bei Q wird spiel beendet
+            EndGame end = new EndGame(spielstand());
             end.endgame();
             stage.hide();
 
-        }
-        else{changePlayer=false;}    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe
+        } else if (action == Actions.LOAD) {
+            SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
+            load.loadGame(this);
+            changePlayer = false;
+            System.out.println("game loaded");
+        } else if (action == Actions.SAVE) {
+            SaveLoadGame save = new SaveLoadGame(player1, player2, this, currentPlayer);
+            save.saveGame();
+            changePlayer = false;
+            System.out.println("Game saved");
+        } else {
+            changePlayer = false;
+        }    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe
 
         // Update player score
         currentPlayer.setScore(currentPlayer.getScore().add(mat.getValue(currentPlayer.position.x, currentPlayer.position.y)));
@@ -79,7 +89,7 @@ public class MAX {
         mat.setValue(currentPlayer.position.x, currentPlayer.position.y, Fraction.ZERO);
 
         // Rotate current player
-        if(changePlayer) {
+        if (changePlayer) {
             if (currentPlayer == player1) {
                 currentPlayer = player2;
                 otherPlayer = player1;
@@ -89,13 +99,15 @@ public class MAX {
             }
             currentPlayer.setIsSelectedProperty(true);
             otherPlayer.setIsSelectedProperty(false);
+        } else {
+            changePlayer = true;
         }
-        else{changePlayer=true;}
         // Announce winner
-        if (player1.getScore().compareTo(SCORE_TARGET) >= 1||
-                player2.getScore().compareTo(SCORE_TARGET) >= 1||
-                sum.equals(Fraction.ZERO)) {
-            EndGame end=new EndGame(spielstand());
+        if (player1.getScore().compareTo(SCORE_TARGET) >= 1 ||
+                player2.getScore().compareTo(SCORE_TARGET) >= 1 ||
+                sum.compareTo(Fraction.ZERO) <= 0) {
+
+            EndGame end = new EndGame(spielstand());
             end.endgame();
             stage.hide();
         }
@@ -113,6 +125,7 @@ public class MAX {
         }
         */
 
+
         board.update(player1, player2, currentPlayer, mat);       //Spielbrett updaten
     }
 
@@ -121,14 +134,13 @@ public class MAX {
 
         if (player1.getScore().compareTo(SCORE_TARGET) >= 1) {
             ergebniss += (player1.getName() + " wins!\n");
-        }
-        else if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
+        } else if (player2.getScore().compareTo(SCORE_TARGET) >= 1) {
             ergebniss += (player2.getName() + " wins!\n");
         }
         // Ende nicht durch Erreichen der Maxpunktzahl, entweder durch leeres Spielfeld, oder abbruch
-        else  {
+        else {
             int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte
-            if (i == 0) ergebniss+=("Unentschieden\n");
+            if (i == 0) ergebniss += ("Unentschieden\n");
             else {          //falls einer mehr Punkte hat als der andere
                 ergebniss += (i == 1 ? player1.getName() + " wins!" : player2.getName() + " wins!\n");
             }
@@ -175,8 +187,23 @@ public class MAX {
         return mat;
     }
 
-    public void setStage(Stage stage){
+    public void setStage(Stage stage) {
         this.stage = stage;
+    }
+
+    //Updates the new Values when laoding a new game
+    public void loadnewValues(Player player1, Player player2, Matrix<Fraction> mat) {
+
+        this.player1 = player1;
+        System.out.println(player1.getScore());
+        this.player2 = player2;
+        this.mat = mat;
+        currentPlayer = player1;
+        otherPlayer = player2;
+        currentPlayer.setIsSelectedProperty(true);
+        otherPlayer.setIsSelectedProperty(false);
+        board.update(player1, player2, currentPlayer, mat);
+
     }
 }
 

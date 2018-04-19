@@ -19,7 +19,7 @@ public class RootLayoutController {
     @FXML
     GridPane playerScores;
     public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher(); //erzeugt KeyBoardEventPublisher
-    MAX game;   //erzeugt MAXGame
+    public MAX game;   //erzeugt MAXGame
 
 
     public void initialize() {
@@ -56,6 +56,8 @@ public class RootLayoutController {
                 case LEFT:  game.enterAction(Actions.LEFT); break;
                 case RIGHT: game.enterAction(Actions.RIGHT); break;
                 case Q: game.enterAction(Actions.QUIT); break;
+                case S: game.enterAction(Actions.SAVE); break;
+                case L: game.enterAction(Actions.LOAD); break;
             }
         });
 

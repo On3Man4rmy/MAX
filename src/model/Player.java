@@ -4,14 +4,30 @@ import javafx.beans.property.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
+import java.io.*;
+
 /**
  * @author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 08.01.2018
  */
 
-public class Player {
+public class Player implements Serializable{
     // Name
-    private StringProperty name = new SimpleStringProperty();
+    Position position;
+    transient private StringProperty name = new SimpleStringProperty();
+    transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
+    transient private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
+    transient private StringProperty shortName = new SimpleStringProperty();
+    transient public ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
+
+    Player (Position position, String name, String shortName, Color color) {
+        this.position = position;
+        setName(name);
+        setShortName(shortName);
+        setFillProperty(color);
+        System.out.println(getScore());
+    }
+
     public void setName(String name) {
         this.name.set(name);
     }
@@ -22,7 +38,6 @@ public class Player {
         return name;
     }
     // Short name
-    private StringProperty shortName = new SimpleStringProperty();
     public void setShortName(String shortName) {
         this.shortName.set(shortName);
     }
@@ -34,7 +49,6 @@ public class Player {
     }
 
     // Score
-    private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
     public void setScore(Fraction score) {
         this.score.set(score);
     }
@@ -46,13 +60,11 @@ public class Player {
     }
 
     // Selected
-    private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
     public Boolean isSelected() { return isSelectedProperty.get(); }
     public BooleanProperty isSelectedProperty() { return isSelectedProperty; }
     public void setIsSelectedProperty(Boolean selected) { isSelectedProperty.set(selected); }
 
     // Fill
-    public ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
     public Paint getFill() { return fillProperty.get(); }
     public ObjectProperty<Paint> getFillProperty() {
         return fillProperty;
@@ -61,7 +73,6 @@ public class Player {
         fillProperty.set(color);
     }
 
-    Position position;
 
 
 
@@ -70,13 +81,10 @@ public class Player {
     }
 
 
-
-    Player (Position position, String name, String shortName, Color color) {
-        this.position = position;
-        setName(name);
-        setShortName(shortName);
-        setFillProperty(color);
+    public Position getPosition() {
+        return position;
     }
+
     //Bewegt den Spieler
     public Player moveDirection(Actions direction) {
         position.moveDirection(direction);
@@ -92,4 +100,6 @@ public class Player {
     public String toString() {
         return this.getShortName();
     }
+
+
 }

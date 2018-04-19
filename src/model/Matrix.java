@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.function.*;
 
@@ -8,7 +9,7 @@ import java.util.function.*;
  * @author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 3.0 11/04/2018
  */
-public class Matrix<T> {
+public class Matrix<T> implements Serializable{
     T[][] data;
 
 
