@@ -10,6 +10,7 @@ import java.util.Date;
 
 /**
  * Speichert die definierenden Attribute des games, und kann sie wieder laden
+ * Wird benötigt, da Player Instanzvariablen haten, die nicht Serializable sind
  * @author  Fetzer 198318, Simon Stratemeier 199067
  * @version 1.0 19.04.2018
  */
