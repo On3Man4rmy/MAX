@@ -72,9 +72,6 @@ public class Player implements Serializable{
         fillProperty.set(color);
     }
 
-
-
-
     Player (Position position) {
         this.position = position;
     }
@@ -99,6 +96,4 @@ public class Player implements Serializable{
     public String toString() {
         return this.getShortName();
     }
-
-
 }

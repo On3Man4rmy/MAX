@@ -1,7 +1,8 @@
 package model;
 
-import controller.PlayerScoreController;
-import controller.RootLayoutController;
+import GameWindow.GamePane;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -34,12 +35,17 @@ public class MAX implements Serializable {
     transient public Board board = new Board();   //Spielbrett
     transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
     transient private Stage stage;
-    transient RootLayoutController controller;
+    transient GamePane controller;
+    transient private BooleanProperty isGameDone = new SimpleBooleanProperty();
+
+    public BooleanProperty isGameDoneProperty() {
+        return isGameDone;
+    }
 
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
      */
-    public MAX(RootLayoutController controller) {
+    public MAX(GamePane controller) {
         board.update(player1, player2, currentPlayer, mat);
         currentPlayer.setIsSelectedProperty(true);
         this.controller = controller;
@@ -69,9 +75,10 @@ public class MAX implements Serializable {
                 && !isSamePosition(currentPlayer.peekDirection(Actions.RIGHT), otherPlayer)) {
             currentPlayer.moveDirection(Actions.RIGHT);
         } else if (action == Actions.QUIT) {  //Bei Q wird spiel beendet
-            EndGame end = new EndGame(spielstand());
-            end.endgame();
-            stage.hide();
+            isGameDone.setValue(true);
+            //EndGame end = new EndGame(spielstand());
+            //end.endgame();
+            //stage.hide();
 
             //Bei L eingabe wird der FileLoader feöffnet, und ein Savegame kann gewäählt werden
         } else if (action == Actions.LOAD) {
@@ -123,10 +130,10 @@ public class MAX implements Serializable {
         if (player1.getScore().compareTo(SCORE_TARGET) >= 1 ||
                 player2.getScore().compareTo(SCORE_TARGET) >= 1 ||
                 sum.compareTo(Fraction.ZERO) <= 0) {
-
-            EndGame end = new EndGame(spielstand());
-            end.endgame();
-            stage.hide();
+            isGameDone.setValue(true);
+           // EndGame end = new EndGame(spielstand());
+            //end.endgame();
+            //stage.hide();
         }
 
 
@@ -151,6 +158,17 @@ public class MAX implements Serializable {
         }
 
         return ergebniss;
+    }
+
+    public Player getWinner() {            //Erzeugt String mit Spielstand
+        int i = player1.getScore().compareTo(player2.getScore()); //falls beide Gleichviele Punkte
+        Player winner = null;
+        if (i >= 1) {
+            winner = player1;
+        } else if (i <= -1) {
+            winner = player2;
+        }
+        return winner;
     }
 
     // Check if players have the same position
@@ -197,7 +215,6 @@ public class MAX implements Serializable {
 
     //Updates the new Values when laoding a new game
     public void loadnewValues(Player player1, Player player2, Matrix<Fraction> mat) {
-
         this.player1 = player1;
         this.player2 = player2;
         this.mat = mat;
@@ -206,7 +223,6 @@ public class MAX implements Serializable {
         currentPlayer.setIsSelectedProperty(true);
         otherPlayer.setIsSelectedProperty(false);
         board.update(player1, player2, currentPlayer, mat);
-
     }
 }
 
