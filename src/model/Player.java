@@ -25,7 +25,6 @@ public class Player implements Serializable{
         setName(name);
         setShortName(shortName);
         setFillProperty(color);
-        System.out.println(getScore());
     }
 
     public void setName(String name) {
