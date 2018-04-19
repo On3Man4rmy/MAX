@@ -35,6 +35,7 @@ public class PlayerScoreController extends HBox {
 
         lblPlayerName.textProperty().bind(player.getNameProperty());
         lblPlayerName.textFillProperty().bind(player.getFillProperty());
+        lblPlayerScore.setText(String.valueOf(MathUtil.roundToDecimalPlaces(player.getScore().doubleValue(), 2)));
         player.getScoreProperty().addListener((observable, oldValue, newValue) -> {
             lblPlayerScore.setText(String.valueOf(MathUtil.roundToDecimalPlaces(newValue.doubleValue(), 2)));
         });

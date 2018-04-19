@@ -68,7 +68,7 @@ public class SaveLoadGame implements Serializable{
             System.err.println (e);
         }
     }
-    public void loadGame( MAX oldGame){
+    public MAX loadGame( MAX oldGame){
         try {
             FileInputStream inputFile = new FileInputStream("Max.ser");
             ObjectInputStream objIn=new ObjectInputStream(inputFile);
@@ -100,7 +100,6 @@ public class SaveLoadGame implements Serializable{
         } catch (IOException e) {
             System.err.println (e);
         }
-
+        return oldGame;
     }
-
 }

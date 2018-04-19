@@ -26,13 +26,13 @@ public class RootLayoutController {
     Parent btnSave;
     @FXML
     Parent btnLoad;
-    public KeyboardEventPublisher keyboardEventPublisher=new KeyboardEventPublisher(); //erzeugt KeyBoardEventPublisher
+    public KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
     public MAX game;   //erzeugt MAXGame
     GridPane playerMap = new GridPane();
 
 
     public void initialize() {
-        loadGame(new MAX());
+        loadGame(new MAX(this));
     }
 
     public void loadGame(MAX game) {
@@ -63,6 +63,7 @@ public class RootLayoutController {
             }
         }
 
+        keyboardEventPublisher = new KeyboardEventPublisher();
         keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
                 case UP:    game.enterAction(Actions.UP); break;

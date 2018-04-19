@@ -1,5 +1,7 @@
 package model;
 
+import controller.PlayerScoreController;
+import controller.RootLayoutController;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import util.MathUtil;
@@ -30,13 +32,15 @@ public class MAX implements Serializable {
     transient public Board board = new Board();   //Spielbrett
     transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
     transient private Stage stage;
+    transient RootLayoutController controller;
 
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
      */
-    public MAX() {
+    public MAX(RootLayoutController controller) {
         board.update(player1, player2, currentPlayer, mat);
         currentPlayer.setIsSelectedProperty(true);
+        this.controller = controller;
     }
 
     public void enterAction(Actions action) {  //Tasteneingabe
@@ -69,7 +73,9 @@ public class MAX implements Serializable {
 
         } else if (action == Actions.LOAD) {
             SaveLoadGame load = new SaveLoadGame(player1, player2, this, currentPlayer);
-            load.loadGame(this);
+            MAX newGame = load.loadGame(this);
+            controller.loadGame(newGame);
+
             changePlayer = false;
             System.out.println("game loaded");
         } else if (action == Actions.SAVE) {
