@@ -1,8 +1,15 @@
-package controller;
+package GameWindow;
 
+import Fraction.FractionController;
+import App.App;
+import PlayerScoreView.PlayerScore;
+import WinnerInformation.WinnerInformation;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
+import javafx.scene.control.MenuButton;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -10,26 +17,39 @@ import model.Actions;
 import model.MAX;
 import model.Player;
 import util.KeyboardEventPublisher;
+
+import java.io.IOException;
+
 /**
- * Controller für RootLayout.fxml
+ * Controller für GamePane.fxml
  * @author  Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 19/04/2018
  */
-public class RootLayoutController {
+public class GamePane extends AnchorPane {
     @FXML
     GridPane rootLayout;
     @FXML
     GridPane playerScores;
     @FXML
     VBox menu;
-    @FXML
-    Parent btnSave;
-    @FXML
-    Parent btnLoad;
     public KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
     public MAX game;   //erzeugt MAXGame
     GridPane playerMap = new GridPane();
+    App app;
+    Stage stage;
 
+    public GamePane(Stage stage, App app){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePane.fxml"));
+        fxmlLoader.setRoot(this);
+        fxmlLoader.setController(this);
+        try {
+            fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        setStage(stage);
+        setApp(app);
+    }
 
     public void initialize() {
         loadGame(new MAX(this));
@@ -44,10 +64,11 @@ public class RootLayoutController {
         Player player1 = game.player1;
         Player player2 = game.player2;
         //erzeugtPlayerScoreCOntrollers
-        PlayerScoreController playerScore1 = new PlayerScoreController(player1);
-        PlayerScoreController playerScore2 = new PlayerScoreController(player2);
+        PlayerScore playerScore1 = new PlayerScore(player1);
+        PlayerScore playerScore2 = new PlayerScore(player2);
         playerScore1.setAlignment(Pos.BOTTOM_LEFT);
         playerScore2.setAlignment(Pos.TOP_LEFT);
+
 
         for(int i = 0; i < 8; i++) {
             RowConstraints row = new RowConstraints();
@@ -63,6 +84,19 @@ public class RootLayoutController {
             }
         }
 
+        /*
+        MenuButton btnSave = new MenuButton("Save");
+        MenuButton btnLoad = new MenuButton("Load");
+        MenuButton btnNewGame = new MenuButton("New Game");
+        btnSave.setOnMouseClicked(event -> actionSaveGame());
+        btnLoad.setOnMouseClicked(event -> actionLoadGame());
+        btnNewGame.setOnMouseClicked(event -> actionNewGame());
+        menu.getChildren().clear();
+        menu.getChildren().add(btnSave);
+        menu.getChildren().add(btnLoad);
+        menu.getChildren().add(btnNewGame);
+        */
+
         keyboardEventPublisher = new KeyboardEventPublisher();
         keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
@@ -71,27 +105,60 @@ public class RootLayoutController {
                 case LEFT:  game.enterAction(Actions.LEFT); break;
                 case RIGHT: game.enterAction(Actions.RIGHT); break;
                 case Q: game.enterAction(Actions.QUIT); break;
-                case ESCAPE: toogleMenuVisibility(); break;
                 case S: game.enterAction(Actions.SAVE); break;
                 case L: game.enterAction(Actions.LOAD); break;
+                case R: actionRestartGame(); break;
+                case ESCAPE:
+                    if(!game.isGameDoneProperty().getValue()) {
+                        toogleMenuVisibility();
+                    }
+                    break;
             }
         });
         menu.toFront();
-
+        game.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
 
         playerScores.add(playerScore1, 0,0);
         playerScores.add(playerScore2, 0,1);
         rootLayout.add(playerMap, 0, 1);
     }
 
+    public void setApp (App app) {
+        this.app = app;
+    }
+
     public void setStage(Stage stage) {
         game.setStage(stage);
+        this.stage = stage;
+    }
+
+    public void announceGameEnd() {
+        WinnerInformation winnerInformation = new WinnerInformation();
+        winnerInformation.addRetryEventHandler(observable -> actionRestartGame());
+        Player winner = game.getWinner();
+        if(winner != null) {
+            winnerInformation.setText(winner.getName() + " gewinnt!");
+            winnerInformation.setTextFill(winner.fillProperty.getValue());
+        } else  {
+            winnerInformation.setText("Untenschieden");
+        }
+        menu.getChildren().clear();
+        menu.getChildren().add(winnerInformation);
+        toogleMenuVisibility();
+    }
+
+    public void actionNewGame() {
+        app.openNewGame();
     }
 
     public void actionSaveGame() {
         game.enterAction(Actions.SAVE);
         System.out.println("Save Game");
         toogleMenuVisibility();
+    }
+
+    public void actionRestartGame() {
+        app.restartGame(stage);
     }
 
     public void actionLoadGame() {

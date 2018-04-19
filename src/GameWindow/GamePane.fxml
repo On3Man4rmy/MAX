@@ -8,14 +8,23 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import MenuButton.MenuButton?>
 
-<AnchorPane  prefHeight="400.0" prefWidth="605.0" style="-fx-background-color: #001824;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RootLayoutController">
+<fx:root
+        type="javafx.scene.layout.AnchorPane"
+        stylesheets="@style.css"
+        prefHeight="400.0"
+        prefWidth="605.0"
+        style="-fx-background-color: #001824;"
+        xmlns="http://javafx.com/javafx/8"
+        xmlns:fx="http://javafx.com/fxml/1">
    <children>
        <VBox fx:id="menu" alignment="CENTER" style="background-color: transparent;"
              visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
              AnchorPane.topAnchor="0.0">
-           <fx:include fx:id="btnSave" source="MenuButtonView.fxml" text="Save" onMouseClicked="#actionSaveGame"/>
-           <fx:include fx:id="btnLoad" source="MenuButtonView.fxml" text="Load" onMouseClicked="#actionLoadGame"/>
+           <MenuButton fx:id="btnSave" text="Save" onMouseClicked="#actionSaveGame"/>
+           <MenuButton fx:id="btnLoad" text="Load" onMouseClicked="#actionLoadGame"/>
+           <MenuButton fx:id="btnNewGame" text="New Game" onMouseClicked="#actionNewGame"/>
        </VBox>
       <GridPane fx:id="rootLayout" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -54,4 +63,4 @@
          </GridPane>
       </GridPane>
    </children>
-</AnchorPane>
+</fx:root>
