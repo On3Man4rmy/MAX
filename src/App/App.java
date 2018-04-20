@@ -40,4 +40,5 @@ public class App extends Application {
         scene.setOnKeyPressed(game.keyboardEventPublisher::publish);  //onkeypressed wird die funktion publish ausgeführt
         stage.setScene(scene);
     }
+
 }

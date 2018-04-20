@@ -189,12 +189,15 @@ public class MAX implements Serializable {
 
     //Updates the new Values when laoding a new model
     public void loadnewValues(Player player1, Player player2, Matrix<Fraction> mat) {
-        player1.setIsSelectedProperty(true);
-        player2.setIsSelectedProperty(false);
+        setPlayer1(player1);
+        setPlayer2(player2);
+        setMat(mat);
         setCurrentPlayer(player1);
         setOtherPlayer(player2);
-        setMat(mat);
-        board.update(player1, player2, getCurrentPlayer(), mat);
+        player1.setIsSelectedProperty(true);
+        player2.setIsSelectedProperty(false);
+        isGameDoneProperty().setValue(false);
+        board.update(player1, player2, currentPlayer, mat);
     }
 
     public Matrix<Fraction> getMat() {

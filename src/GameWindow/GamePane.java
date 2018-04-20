@@ -69,7 +69,7 @@ public class GamePane extends AnchorPane {
     }
 
     public void loadGame(MAX game) {
-        this.model = new MAX(this);
+        this.model = game;
 
         initializeGameBoard();
         initalizePlayers();
@@ -103,32 +103,6 @@ public class GamePane extends AnchorPane {
         model.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
     }
     private void initializeGameBoard(){
-        /*
-        model.getPlayer1Property().addListener(observable -> {
-            Player player = (Player) observable;
-            int posX = player.position.x;
-            int posY = player.position.y;
-            StringProperty name = player.getShortNameProperty();
-            ObjectProperty<Paint> paint = player.getFillProperty();
-            gameBoardController.setBoardElement(name, paint, posX, posY);
-        });
-        model.getPlayer2Property().addListener(observable -> {
-            Player player = (Player) observable;
-            int posX = player.position.x;
-            int posY = player.position.y;
-            StringProperty name = player.getShortNameProperty();
-            ObjectProperty<Paint> paint = player.getFillProperty();
-            gameBoardController.setBoardElement(name, paint, posX, posY);
-        });
-        model.getMatProperty().addListener(observable -> {
-            Matrix<Fraction> matrix = (Matrix<Fraction>) observable;
-            for(int i = 0; i < 8; i++) {
-                for (int j = 0; j < 8; j++) {
-                    StringProperty name = matrix.getValue(i, j).getToStringProperty();
-                    gameBoardController.setBoardElement(name, null, i, j);
-                }
-            }
-        });*/
         rootLayout.getChildren().remove(gameBoard);
         gameBoard = new GridPane();
         for(int i = 0; i < 8; i++) {
