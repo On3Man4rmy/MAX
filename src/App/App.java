@@ -4,6 +4,7 @@ import GameWindow.GamePane;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.MAX;
 
 /**
  * Klasse dient zum Starten des spiels, erzeugt Fenster,

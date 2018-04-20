@@ -27,7 +27,7 @@ public class PlayerScore extends HBox {
     @FXML
     private Label lblSelected;
 
-    public PlayerScore(Player player) {
+    public PlayerScore() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("PlayerScoreView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -37,7 +37,9 @@ public class PlayerScore extends HBox {
         } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+    }
 
+    public void bindPlayer(Player player) {
         lblPlayerName.textProperty().bind(player.getNameProperty());
         lblPlayerName.textFillProperty().bind(player.getFillProperty());
         lblPlayerScore.setText(String.valueOf(MathUtil.roundToDecimalPlaces(player.getScore().doubleValue(), 2)));

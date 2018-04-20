@@ -1,3 +1,16 @@
+.headerLabel {
+    -fx-text-fill: #fff;
+}
+
+MenuButton {
+    -fx-font-size: 50px;
+    -fx-text-fill: white;
+}
 MenuButton:hover {
     -fx-text-fill: #fec500;
 }
+
+GamePane {
+    -fx-background-color: #001824;
+}
+

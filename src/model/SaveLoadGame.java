@@ -18,7 +18,7 @@ import java.util.Date;
 public class SaveLoadGame implements Serializable{
     private Object[] player1 =new Object[6];    //Objekte, welches die Daten der Sieler speichert
     private Object[] player2=new Object[6];
-    private MAX game;           //Referenze auf game
+    private MAX game;           //Referenze auf model
 
 
     /**
@@ -96,10 +96,10 @@ public class SaveLoadGame implements Serializable{
 
                 //Spielupdaten, unterscheidung ob Player 1 oder zwei am Zug sind
                 if((boolean)player1[5]==true) {
-                    oldGame.loadnewValues(p1,p2,saveState.game.mat);
+                    oldGame.loadnewValues(p1,p2,saveState.game.getMat());
                 }
                 else{
-                    oldGame.loadnewValues(p1,p2,saveState.game.mat);
+                    oldGame.loadnewValues(p1,p2,saveState.game.getMat());
 
                 }
                 objIn.close();

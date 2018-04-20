@@ -8,8 +8,8 @@ import java.io.Serializable;
  * @version 3.0 19/04/2018
  */
 public class Position implements Comparable<Position>, Serializable {
-    int x;
-    int y;
+    public int x;
+    public int y;
 
     //Setzt Position
     public Position(int x, int y) {

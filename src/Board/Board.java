@@ -1,15 +1,17 @@
-package model;
+package Board;
 
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.scene.paint.Color;
+import model.Fraction;
+import model.MAX;
+import model.Matrix;
+import model.Player;
 
 /**
  * Output class
  * @author Tobias Fetzer 198318, Simon Stratemeier 199067
  * @version 3.0 30.03.2018
  */
-public class Board implements Observable {
+public class Board {
     BoardElement[][] boardElements = new BoardElement[8][8];  //Array von Boardelemnts, stellt Feld da
 
     public BoardElement[][] getBoardElements() {
@@ -43,19 +45,5 @@ public class Board implements Observable {
                 }
             }
         }
-    }
-
-
-
-
-
-    @Override
-    public void addListener(InvalidationListener listener) {
-
-    }
-
-    @Override
-    public void removeListener(InvalidationListener listener) {
-
     }
 }

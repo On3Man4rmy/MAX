@@ -1,5 +1,8 @@
 package model;
 
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.function.*;
@@ -19,7 +22,6 @@ public class Matrix<T> implements Serializable{
 
         for(int i = 1; i <= data.length; i++) {
             for(int y = 1; y <= data[i-1].length; y++) {
-
                 setValue(i, y, initalFieldValue);
             }
         }
@@ -40,7 +42,7 @@ public class Matrix<T> implements Serializable{
         return s.toString();
     }
 
-    void setValue(int i, int j, T x) {
+    public void setValue(int i, int j, T x) {
         data[i - 1][j - 1] = x;
     }
 
@@ -81,6 +83,4 @@ public class Matrix<T> implements Serializable{
 
         return accumulator;
     }
-
-
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.AnchorPane"
+         style="background-color: transparent;"
+         visible="false"
+         AnchorPane.bottomAnchor="0.0"
+         AnchorPane.leftAnchor="0.0"
+         AnchorPane.rightAnchor="0.0"
+         AnchorPane.topAnchor="0.0"
+         xmlns="http://javafx.com/javafx"
+         xmlns:fx="http://javafx.com/fxml"
+         prefHeight="400.0" prefWidth="600.0">
+    <VBox fx:id="vboxMenu"
+          alignment="CENTER"
+          AnchorPane.bottomAnchor="0.0"
+          AnchorPane.leftAnchor="0.0"
+          AnchorPane.rightAnchor="0.0"
+          AnchorPane.topAnchor="0.0">
+    </VBox>
+</fx:root>

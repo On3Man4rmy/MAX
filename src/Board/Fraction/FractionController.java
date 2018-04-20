@@ -1,11 +1,16 @@
-package Fraction;
+package Board.Fraction;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import model.BoardElement;
+import Board.BoardElement;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 import java.io.IOException;
 
 /**
@@ -19,7 +24,7 @@ public class FractionController extends VBox {
     @FXML
     private Label lblFraction;
 
-    public FractionController(BoardElement boardElement) {
+    public FractionController() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FractionView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
@@ -31,7 +36,12 @@ public class FractionController extends VBox {
         }
 
         alignmentProperty().set(Pos.CENTER);
-        lblFraction.textProperty().bind(boardElement.getTextProperty());
-        lblFraction.textFillProperty().bind(boardElement.getFillProperty());
+    }
+
+    public StringProperty getTextProperty() {
+        return lblFraction.textProperty();
+    }
+    public ObjectProperty<Paint> getFillProperty() {
+        return lblFraction.textFillProperty();
     }
 }

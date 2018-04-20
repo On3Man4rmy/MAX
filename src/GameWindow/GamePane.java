@@ -1,18 +1,22 @@
 package GameWindow;
 
 import App.App;
-import Fraction.FractionController;
+import Board.BoardController;
+import Board.Fraction.FractionController;
+import GameMenu.Button.MenuButton;
+import GameMenu.GameMenu;
+import GameMenu.Label.MenuLabel;
 import PlayerScoreView.PlayerScore;
-import WinnerInformation.WinnerInformation;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import model.Actions;
-import model.MAX;
-import model.Player;
+import model.*;
 import util.KeyboardEventPublisher;
 
 import java.io.IOException;
@@ -26,12 +30,25 @@ public class GamePane extends AnchorPane {
     @FXML
     GridPane rootLayout;
     @FXML
-    GridPane playerScores;
+    PlayerScore playerScore1;
     @FXML
-    VBox menu;
-    public KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
-    public MAX game;   //erzeugt MAXGame
-    GridPane playerMap = new GridPane();
+    PlayerScore playerScore2;
+    @FXML
+    GameMenu gameMenu;
+    Node[] standardMenuNodes = {
+            new MenuButton("Load", event -> actionLoadGame()),
+            new MenuButton("Save", event -> actionSaveGame()),
+            new MenuButton("New Game", event -> actionNewGame()),
+    };
+    MenuLabel winnerInformation = new MenuLabel("Unentschieden");
+    Node[] gameEndMenuNodes = {
+            winnerInformation,
+            new MenuButton("Retry?", event -> actionRestartGame()),
+    };
+    public KeyboardEventPublisher keyboardEventPublisher = new KeyboardEventPublisher();; //erzeugt KeyBoardEventPublisher
+    public MAX model;   //erzeugt MAXGame
+    @FXML
+    BoardController gameBoardController;
     App app;
     Stage stage;
 
@@ -44,6 +61,7 @@ public class GamePane extends AnchorPane {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         setStage(stage);
         setApp(app);
     }
@@ -53,111 +71,133 @@ public class GamePane extends AnchorPane {
     }
 
     public void loadGame(MAX game) {
-         playerScores.getChildren().clear();
-         rootLayout.getChildren().remove(playerMap);
+        this.model = new MAX(this);
 
-        playerMap = new GridPane();
-        this.game = game;
-        Player player1 = game.player1;
-        Player player2 = game.player2;
-        //erzeugtPlayerScoreCOntrollers
-        PlayerScore playerScore1 = new PlayerScore(player1);
-        PlayerScore playerScore2 = new PlayerScore(player2);
-        playerScore1.setAlignment(Pos.BOTTOM_LEFT);
-        playerScore2.setAlignment(Pos.TOP_LEFT);
+        initializeGameBoard();
+        initalizePlayers();
+        initializeKeyBoardEvents();
+        initializeGameMenu();
+    }
 
-
-        for(int i = 0; i < 8; i++) {
-            RowConstraints row = new RowConstraints();
-            ColumnConstraints column = new ColumnConstraints();
-            row.setVgrow(Priority.SOMETIMES);
-            column.setHgrow(Priority.SOMETIMES);
-            playerMap.getRowConstraints().add(row);
-            playerMap.getColumnConstraints().add(column);
-
-            for(int j = 0; j < 8; j++) {
-                FractionController fractionView = new FractionController(game.board.getBoardElements()[i][j]);
-                playerMap.add(fractionView, i, j);
-            }
-        }
-
-        keyboardEventPublisher = new KeyboardEventPublisher();
+    private void initializeKeyBoardEvents() {
         keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
-                case UP:    game.enterAction(Actions.UP); break;
-                case DOWN:  game.enterAction(Actions.DOWN); break;
-                case LEFT:  game.enterAction(Actions.LEFT); break;
-                case RIGHT: game.enterAction(Actions.RIGHT); break;
-                case Q: game.enterAction(Actions.QUIT); break;
-                case S: game.enterAction(Actions.SAVE); break;
-                case L: game.enterAction(Actions.LOAD); break;
+                case UP:    model.enterAction(Actions.UP); break;
+                case DOWN:  model.enterAction(Actions.DOWN); break;
+                case LEFT:  model.enterAction(Actions.LEFT); break;
+                case RIGHT: model.enterAction(Actions.RIGHT); break;
+                case Q: model.enterAction(Actions.QUIT); break;
+                case S: model.enterAction(Actions.SAVE); break;
+                case L: model.enterAction(Actions.LOAD); break;
                 case R: actionRestartGame(); break;
                 case ESCAPE:
-                    if(!game.isGameDoneProperty().getValue()) {
+                    if(!model.isGameDoneProperty().getValue()) {
                         toogleMenuVisibility();
                     }
                     break;
             }
         });
-        menu.toFront();
-        game.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
+    }
+    private void initializeGameMenu() {
+        gameMenu.setChildren(standardMenuNodes);
+        gameMenu.toFront();
+        model.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
+    }
+    private void initializeGameBoard(){
+        model.getPlayer1Property().addListener(observable -> {
+            Player player = (Player) observable;
+            int posX = player.position.x;
+            int posY = player.position.y;
+            StringProperty name = player.getShortNameProperty();
+            ObjectProperty<Paint> paint = player.getFillProperty();
+            gameBoardController.setBoardElement(name, paint, posX, posY);
+        });
+        model.getPlayer2Property().addListener(observable -> {
+            Player player = (Player) observable;
+            int posX = player.position.x;
+            int posY = player.position.y;
+            StringProperty name = player.getShortNameProperty();
+            ObjectProperty<Paint> paint = player.getFillProperty();
+            gameBoardController.setBoardElement(name, paint, posX, posY);
+        });
+        model.getMatProperty().addListener(observable -> {
+            Matrix<Fraction> matrix = (Matrix<Fraction>) observable;
+            for(int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    StringProperty name = matrix.getValue(i, j).getToStringProperty();
+                    gameBoardController.setBoardElement(name, null, i, j);
+                }
+            }
+        });
+        /*
+        rootLayout.getChildren().remove(gameBoard);
+        gameBoard = new GridPane();
+        for(int i = 0; i < 8; i++) {
+            RowConstraints row = new RowConstraints();
+            ColumnConstraints column = new ColumnConstraints();
+            row.setVgrow(Priority.SOMETIMES);
+            column.setHgrow(Priority.SOMETIMES);
+            gameBoard.getRowConstraints().add(row);
+            gameBoard.getColumnConstraints().add(column);
 
-        playerScores.add(playerScore1, 0,0);
-        playerScores.add(playerScore2, 0,1);
-        rootLayout.add(playerMap, 0, 1);
+            for(int j = 0; j < 8; j++) {
+                FractionController fractionView = new FractionController(model.board.getBoardElements()[i][j]);
+                gameBoard.add(fractionView, i, j);
+            }
+        }
+
+        rootLayout.add(gameBoard, 0, 1);*/
+    }
+    private void initalizePlayers(){
+        playerScore1.bindPlayer(model.getPlayer1());
+        playerScore2.bindPlayer(model.getPlayer2());
     }
 
     public void setApp (App app) {
         this.app = app;
     }
-
     public void setStage(Stage stage) {
-        game.setStage(stage);
+        model.setStage(stage);
         this.stage = stage;
     }
 
     public void announceGameEnd() {
-        WinnerInformation winnerInformation = new WinnerInformation();
-        winnerInformation.addRetryEventHandler(observable -> actionRestartGame());
-        Player winner = game.getWinner();
+        Player winner = model.getWinner();
         if(winner != null) {
             winnerInformation.setText(winner.getName() + " gewinnt!");
             winnerInformation.setTextFill(winner.fillProperty.getValue());
         } else  {
             winnerInformation.setText("Untenschieden");
         }
-        menu.getChildren().clear();
-        menu.getChildren().add(winnerInformation);
+
+        gameMenu.setChildren(gameEndMenuNodes);
         toogleMenuVisibility();
+    }
+    public void toogleMenuVisibility() {
+        if(gameMenu.isVisible()) {
+            gameMenu.setVisible(false);
+            rootLayout.setEffect(null);
+        } else {
+            gameMenu.setVisible(true);
+            rootLayout.setEffect(new GaussianBlur());
+        }
     }
 
     public void actionNewGame() {
         app.openNewGame();
     }
-
     public void actionSaveGame() {
-        game.enterAction(Actions.SAVE);
+        model.enterAction(Actions.SAVE);
         System.out.println("Save Game");
         toogleMenuVisibility();
     }
-
     public void actionRestartGame() {
         app.restartGame(stage);
     }
 
     public void actionLoadGame() {
         System.out.println("Load Game");
-        game.enterAction(Actions.LOAD);
+        model.enterAction(Actions.LOAD);
         toogleMenuVisibility();
-    }
-
-    public void toogleMenuVisibility() {
-        if(menu.isVisible()) {
-            menu.setVisible(false);
-            rootLayout.setEffect(null);
-        } else {
-            menu.setVisible(true);
-            rootLayout.setEffect(new GaussianBlur());
-        }
     }
 }

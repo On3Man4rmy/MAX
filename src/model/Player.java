@@ -13,7 +13,7 @@ import java.io.*;
 
 public class Player implements Serializable{
     // Name
-    Position position;
+    public Position position;
     transient private StringProperty name = new SimpleStringProperty();
     transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
     transient private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
