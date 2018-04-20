@@ -1,4 +1,4 @@
-package Board;
+package model;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

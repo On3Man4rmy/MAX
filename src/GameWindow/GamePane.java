@@ -1,11 +1,10 @@
 package GameWindow;
 
 import App.App;
-import Board.BoardController;
-import Board.Fraction.FractionController;
 import GameMenu.Button.MenuButton;
 import GameMenu.GameMenu;
 import GameMenu.Label.MenuLabel;
+import Fraction.FractionController;
 import PlayerScoreView.PlayerScore;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.StringProperty;
@@ -45,12 +44,11 @@ public class GamePane extends AnchorPane {
             winnerInformation,
             new MenuButton("Retry?", event -> actionRestartGame()),
     };
-    public KeyboardEventPublisher keyboardEventPublisher = new KeyboardEventPublisher();; //erzeugt KeyBoardEventPublisher
+    public KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
     public MAX model;   //erzeugt MAXGame
-    @FXML
-    BoardController gameBoardController;
     App app;
     Stage stage;
+    GridPane gameBoard;
 
     public GamePane(Stage stage, App app){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePane.fxml"));
@@ -80,6 +78,7 @@ public class GamePane extends AnchorPane {
     }
 
     private void initializeKeyBoardEvents() {
+        keyboardEventPublisher = new KeyboardEventPublisher();
         keyboardEventPublisher.subscribe(event -> {
             switch (event.getCode()) {
                 case UP:    model.enterAction(Actions.UP); break;
@@ -104,6 +103,7 @@ public class GamePane extends AnchorPane {
         model.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
     }
     private void initializeGameBoard(){
+        /*
         model.getPlayer1Property().addListener(observable -> {
             Player player = (Player) observable;
             int posX = player.position.x;
@@ -128,8 +128,7 @@ public class GamePane extends AnchorPane {
                     gameBoardController.setBoardElement(name, null, i, j);
                 }
             }
-        });
-        /*
+        });*/
         rootLayout.getChildren().remove(gameBoard);
         gameBoard = new GridPane();
         for(int i = 0; i < 8; i++) {
@@ -146,7 +145,7 @@ public class GamePane extends AnchorPane {
             }
         }
 
-        rootLayout.add(gameBoard, 0, 1);*/
+        rootLayout.add(gameBoard, 0, 1);
     }
     private void initalizePlayers(){
         playerScore1.bindPlayer(model.getPlayer1());

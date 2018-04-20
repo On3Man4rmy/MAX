@@ -1,4 +1,4 @@
-package Board;
+package model;
 
 import javafx.scene.paint.Color;
 import model.Fraction;

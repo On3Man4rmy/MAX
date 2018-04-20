@@ -1,10 +1,8 @@
 package model;
 
-import Board.Board;
 import GameWindow.GamePane;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -29,11 +27,11 @@ public class MAX implements Serializable {
     public static final int START_Y = 1;
     public static final Fraction SCORE_TARGET = new Fraction(80, 1); //Zile sind 80 punkte
     public static Fraction sum = new Fraction(0, 1);  //Zählt die Punkte die noch übrig sind, bei 0 uentschieden
-    //public Matrix<Fraction> mat = initMatrix(); //inititalisert Matrix mit Fraktions
-    //public Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")); //Beide spieler definiert
-    //public Player player2 = new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500"));
-    //transient Player currentPlayer = player1; //Derzeiiger Spieler
-    //transient Player otherPlayer = player2;
+    private Matrix<Fraction> mat = initMatrix(); //inititalisert Matrix mit Fraktions
+    private Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")); //Beide spieler definiert
+    private Player player2 = new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500"));
+    private transient Player currentPlayer = getPlayer1(); //Derzeiiger Spieler
+    private transient Player otherPlayer = getPlayer2();
     transient public Board board = new Board();   //Spielbrett
     transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
     transient private Stage stage;
@@ -43,77 +41,11 @@ public class MAX implements Serializable {
         return isGameDone;
     }
 
-    private transient SimpleObjectProperty<Player> player1Property = new SimpleObjectProperty<>(new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")));
-    private transient SimpleObjectProperty<Player> player2Property = new SimpleObjectProperty<>(new Player(new Position(5, 5), "YELLOW", "Y", Color.web("#fec500")));
-    private transient SimpleObjectProperty<Player> currentPlayerProperty = new SimpleObjectProperty(player1Property.get());
-    private transient SimpleObjectProperty<Player> otherPlayerProperty = new SimpleObjectProperty<>(player2Property.get());
-    private transient SimpleObjectProperty<Matrix<Fraction>> matProperty = new SimpleObjectProperty<>(initMatrix());
-
-    public SimpleObjectProperty<Player> getPlayer1Property() {
-        return player1Property;
-    }
-
-    public SimpleObjectProperty<Player> getPlayer2Property() {
-        return player2Property;
-    }
-
-    public SimpleObjectProperty<Player> getCurrentPlayerProperty() {
-        return currentPlayerProperty;
-    }
-
-    public SimpleObjectProperty<Player> getOtherPlayerProperty() {
-        return otherPlayerProperty;
-    }
-
-    public SimpleObjectProperty<Matrix<Fraction>> getMatProperty() {
-        return matProperty;
-    }
-
-    public Player getPlayer1() {
-        return getPlayer1Property().get();
-    }
-
-    public Player getPlayer2() {
-        return getPlayer2Property().get();
-    }
-
-    public Player getCurrentPlayer() {
-        return getCurrentPlayerProperty().get();
-    }
-
-    public Player getOtherPlayer() {
-        return getCurrentPlayerProperty().get();
-    }
-
-    public Matrix<Fraction> getMat() {
-        return getMatProperty().get();
-    }
-
-    public void setCurrentPlayer(Player currentPlayer) {
-        getCurrentPlayerProperty().set(currentPlayer);
-    }
-
-    public void setOtherPlayer(Player otherPlayer) {
-        getOtherPlayerProperty().set(otherPlayer);
-    }
-
-    public void setPlayer1(Player player1) {
-        getPlayer1Property().set(player1);
-    }
-
-    public void setPlayer2(Player player2) {
-        getPlayer2Property().set(player2);
-    }
-
-    public void setMat(Matrix<Fraction> mat) {
-        getMatProperty().set(mat);
-    }
-
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
      */
     public MAX(GamePane controller) {
-        //board.update(player1, player2, currentPlayer, mat);
+        board.update(player1, player2, currentPlayer, mat);
         getCurrentPlayer().setIsSelectedProperty(true);
         this.controller = controller;
     }
@@ -182,11 +114,11 @@ public class MAX implements Serializable {
         // Rotate current player
         if (changePlayer) {
             if (getCurrentPlayer() == getPlayer1()) {
-                getCurrentPlayerProperty().set(getPlayer2());
-                getOtherPlayerProperty().set(getPlayer1());
+                setCurrentPlayer(getPlayer2());
+                setOtherPlayer(getPlayer1());
             } else {
-                getCurrentPlayerProperty().set(getPlayer1());
-                getOtherPlayerProperty().set(getPlayer2());
+                setCurrentPlayer(getPlayer1());
+                setOtherPlayer(getPlayer2());
             }
             getCurrentPlayer().setIsSelectedProperty(true);
             getOtherPlayer().setIsSelectedProperty(false);
@@ -201,7 +133,7 @@ public class MAX implements Serializable {
         }
 
 
-        //board.update(player1, player2, currentPlayer, mat);       //Spielbrett updaten
+        board.update(getPlayer1(), getPlayer2(), getCurrentPlayer(), getMat());       //Spielbrett updaten
     }
 
 
@@ -221,7 +153,7 @@ public class MAX implements Serializable {
         return p1.position.equals(p2.position);
     }
 
-    // Create Board.Fraction with random value
+    // Create Fraction with random value
     public static Fraction getGameFraction() {
         int minNumerator, maxNumerator, randomNumerator;
         int minDenominator, maxDenominator, randomDenominator;
@@ -262,7 +194,47 @@ public class MAX implements Serializable {
         setCurrentPlayer(player1);
         setOtherPlayer(player2);
         setMat(mat);
-        //board.update(player1, player2, currentPlayer, mat);
+        board.update(player1, player2, getCurrentPlayer(), mat);
+    }
+
+    public Matrix<Fraction> getMat() {
+        return mat;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public Player getOtherPlayer() {
+        return otherPlayer;
+    }
+
+    public void setMat(Matrix<Fraction> mat) {
+        this.mat = mat;
+    }
+
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
+    }
+
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+
+    public void setCurrentPlayer(Player currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    public void setOtherPlayer(Player otherPlayer) {
+        this.otherPlayer = otherPlayer;
     }
 }
 
