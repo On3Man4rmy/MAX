@@ -24,7 +24,7 @@ public class MAX implements Serializable {
     public static final int END_Y = 8;
     public static final int START_X = 1;
     public static final int START_Y = 1;
-    public static final Fraction SCORE_TARGET = new Fraction(120, 1); //Zile sind 80 punkte
+    public static final Fraction SCORE_TARGET = new Fraction(80, 1); //Zile sind 80 punkte
     public static Fraction sum = new Fraction(0, 1);  //Zählt die Punkte die noch übrig sind, bei 0 uentschieden
     private Matrix<Fraction> mat = initMatrix(); //inititalisert Matrix mit Fraktions
     private Player player1 = new Player(new Position(4, 4), "RED", "R", Color.web("#e00202")); //Beide spieler definiert
