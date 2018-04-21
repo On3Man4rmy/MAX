@@ -35,45 +35,44 @@ public class MAX implements Serializable {
     transient public Board board = new Board();   //Spielbrett
     transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
     transient private Stage stage;
-    transient GamePane controller;
+    //transient GamePane controller;
     transient private BooleanProperty isGameDone = new SimpleBooleanProperty();
     public BooleanProperty isGameDoneProperty() {
         return isGameDone;
     }
-
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
      */
     public MAX(GamePane controller) {
-        board.update(player1, player2, currentPlayer, mat);
-        getCurrentPlayer().setIsSelectedProperty(true);
-        this.controller = controller;
+        board.update(player1, player2, mat);
+        getCurrentPlayer().setIsSelected(true);
+        //this.controller = controller;
     }
 
-    public void setBoard(Board board) {
+    /*public void setBoard(Board board) {
         this.board = board;
-    }
+    }*/
 
     public void enterAction(Actions action) {  //Tasteneingabe
         /**
          * Bei eingabe von Pfeiltasten wird überprüft ob Wand oder anderer SPeiler im weg ist
          */
         if (action == Actions.UP
-                && getCurrentPlayer().position.y > START_Y
+                && getCurrentPlayer().getPosition().y > START_Y
                 && !isSamePosition(getCurrentPlayer().peekDirection(Actions.UP), getOtherPlayer())) {
             getCurrentPlayer().moveDirection(Actions.UP);
         } else if (action == Actions.LEFT
-                && getCurrentPlayer().position.x > START_X
+                && getCurrentPlayer().getPosition().x > START_X
                 && !isSamePosition(getCurrentPlayer().peekDirection(Actions.LEFT), getOtherPlayer())) {
             getCurrentPlayer().moveDirection(Actions.LEFT);
 
         } else if (action == Actions.DOWN
-                && getCurrentPlayer().position.y < END_Y
+                && getCurrentPlayer().getPosition().y < END_Y
                 && !isSamePosition(getCurrentPlayer().peekDirection(Actions.DOWN), getOtherPlayer())) {
             getCurrentPlayer().moveDirection(Actions.DOWN);
 
         } else if (action == Actions.RIGHT
-                && getCurrentPlayer().position.x < END_X
+                && getCurrentPlayer().getPosition().x < END_X
                 && !isSamePosition(getCurrentPlayer().peekDirection(Actions.RIGHT), getOtherPlayer())) {
             getCurrentPlayer().moveDirection(Actions.RIGHT);
         } else if (action == Actions.QUIT) {  //Bei Q wird spiel beendet
@@ -89,7 +88,7 @@ public class MAX implements Serializable {
                 //load new and update controller
                 SaveLoadGame load = new SaveLoadGame(getPlayer1(), getPlayer2(), this, getCurrentPlayer());
                 MAX newGame = load.loadGame(file, this);
-                controller.loadGame(newGame);
+                //controller.loadGame(newGame);
 
                 System.out.println("model loaded");
             }
@@ -105,11 +104,11 @@ public class MAX implements Serializable {
         }    //Wenn nichts zutrifft war entweder eingabe falsch, oder weg in Wand, kein Spielerwechsel bis korekkt eingabe
 
         // Update player score
-        getCurrentPlayer().setScore(getCurrentPlayer().getScore().add(getMat().getValue(getCurrentPlayer().position.x, getCurrentPlayer().position.y)));
+        getCurrentPlayer().setScore(getCurrentPlayer().getScore().add(getMat().getValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y)));
         // Update score of remaining playing field points
-        sum = sum.subtract(getMat().getValue(getCurrentPlayer().position.x, getCurrentPlayer().position.y));
+        sum = sum.subtract(getMat().getValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y));
         // When player arrives field set field value to 0
-        getMat().setValue(getCurrentPlayer().position.x, getCurrentPlayer().position.y, Fraction.ZERO);
+        getMat().setValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y, Fraction.ZERO);
 
         // Rotate current player
         if (changePlayer) {
@@ -120,8 +119,8 @@ public class MAX implements Serializable {
                 setCurrentPlayer(getPlayer1());
                 setOtherPlayer(getPlayer2());
             }
-            getCurrentPlayer().setIsSelectedProperty(true);
-            getOtherPlayer().setIsSelectedProperty(false);
+            getCurrentPlayer().setIsSelected(true);
+            getOtherPlayer().setIsSelected(false);
         } else {
             changePlayer = true;
         }
@@ -133,7 +132,7 @@ public class MAX implements Serializable {
         }
 
 
-        board.update(getPlayer1(), getPlayer2(), getCurrentPlayer(), getMat());       //Spielbrett updaten
+        board.update(getPlayer1(), getPlayer2(), getMat());       //Spielbrett updaten
     }
 
 
@@ -150,7 +149,7 @@ public class MAX implements Serializable {
 
     // Check if players have the same position
     public static Boolean isSamePosition(Player p1, Player p2) {
-        return p1.position.equals(p2.position);
+        return p1.getPosition().equals(p2.getPosition());
     }
 
     // Create Fraction with random value
@@ -188,16 +187,26 @@ public class MAX implements Serializable {
     }
 
     //Updates the new Values when laoding a new model
-    public void loadnewValues(Player player1, Player player2, Matrix<Fraction> mat) {
-        setPlayer1(player1);
-        setPlayer2(player2);
+    public void loadNewValues(Player player1, Player player2, Matrix<Fraction> mat) {
+        this.player1.setShortName(player1.getShortName());
+        this.player1.setPosition(player1.getPosition());
+        this.player1.setScore(player1.getScore());
+        this.player1.setName(player1.getName());
+        this.player1.setFill(player1.getFill());
+        this.player1.setIsSelected(true);
+
+        this.player2.setShortName(player2.getShortName());
+        this.player2.setPosition(player2.getPosition());
+        this.player2.setScore(player1.getScore());
+        this.player2.setName(player2.getName());
+        this.player2.setFill(player2.getFill());
+        this.player2.setIsSelected(false);
+
         setMat(mat);
         setCurrentPlayer(player1);
         setOtherPlayer(player2);
-        player1.setIsSelectedProperty(true);
-        player2.setIsSelectedProperty(false);
-        isGameDoneProperty().setValue(false);
-        board.update(player1, player2, currentPlayer, mat);
+
+        board.update(player1, player2, mat);
     }
 
     public Matrix<Fraction> getMat() {
@@ -222,14 +231,6 @@ public class MAX implements Serializable {
 
     public void setMat(Matrix<Fraction> mat) {
         this.mat = mat;
-    }
-
-    public void setPlayer1(Player player1) {
-        this.player1 = player1;
-    }
-
-    public void setPlayer2(Player player2) {
-        this.player2 = player2;
     }
 
     public void setCurrentPlayer(Player currentPlayer) {

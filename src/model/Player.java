@@ -13,18 +13,33 @@ import java.io.*;
 
 public class Player implements Serializable{
     // Name
-    public Position position;
     transient private StringProperty name = new SimpleStringProperty();
     transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
     transient private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
     transient private StringProperty shortName = new SimpleStringProperty();
     transient public ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
+    transient public ObjectProperty<Position> positionProperty = new SimpleObjectProperty<>();
 
-    Player (Position position, String name, String shortName, Color color) {
-        this.position = position;
+    public Player (Position position, String name, String shortName, Color color) {
+        setPosition(position);
         setName(name);
         setShortName(shortName);
-        setFillProperty(color);
+        setFill(color);
+    }
+
+    public Player(Position position) {
+        setPosition(position);
+    }
+
+    //Bewegt den Spieler
+    public Player moveDirection(Actions direction) {
+        getPosition().moveDirection(direction);
+        return this;
+    }
+
+    //gibt position des Spielers nach einer Bewegung
+    public Player peekDirection(Actions direction) {
+        return new Player(getPosition().peekDirection(direction));
     }
 
     public void setName(String name) {
@@ -61,35 +76,24 @@ public class Player implements Serializable{
     // Selected
     public Boolean isSelected() { return isSelectedProperty.get(); }
     public BooleanProperty isSelectedProperty() { return isSelectedProperty; }
-    public void setIsSelectedProperty(Boolean selected) { isSelectedProperty.set(selected); }
+    public void setIsSelected(Boolean selected) { isSelectedProperty.set(selected); }
 
     // Fill
     public Paint getFill() { return fillProperty.get(); }
     public ObjectProperty<Paint> getFillProperty() {
         return fillProperty;
     }
-    public void setFillProperty(Color color) {
+    public void setFill(Paint color) {
         fillProperty.set(color);
     }
 
-    Player (Position position) {
-        this.position = position;
+    // Position
+    public Position getPosition() { return positionProperty.get(); }
+    public ObjectProperty<Position> getPositionProperty() {
+        return positionProperty;
     }
-
-
-    public Position getPosition() {
-        return position;
-    }
-
-    //Bewegt den Spieler
-    public Player moveDirection(Actions direction) {
-        position.moveDirection(direction);
-        return this;
-    }
-
-    //gibt position des Spielers nach einer Bewegung
-    public Player peekDirection(Actions direction) {
-        return new Player(position.peekDirection(direction));
+    public void setPosition(Position position) {
+        positionProperty.set(position);
     }
 
     @Override

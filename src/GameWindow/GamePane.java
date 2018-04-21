@@ -100,7 +100,13 @@ public class GamePane extends AnchorPane {
     private void initializeGameMenu() {
         gameMenu.setChildren(standardMenuNodes);
         gameMenu.toFront();
-        model.isGameDoneProperty().addListener(observable -> this.announceGameEnd());
+        model.isGameDoneProperty().addListener((observable, oldValue, isGameDone) -> {
+            if(isGameDone) {
+                announceGameEnd();
+            } else {
+                gameMenu.setChildren(standardMenuNodes);
+            }
+        });
     }
     private void initializeGameBoard(){
         rootLayout.getChildren().remove(gameBoard);

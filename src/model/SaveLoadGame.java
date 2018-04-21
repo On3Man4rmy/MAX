@@ -96,10 +96,10 @@ public class SaveLoadGame implements Serializable{
 
                 //Spielupdaten, unterscheidung ob Player 1 oder zwei am Zug sind
                 if((boolean)player1[5]==true) {
-                    oldGame.loadnewValues(p1,p2,saveState.game.getMat());
+                    oldGame.loadNewValues(p1,p2,saveState.game.getMat());
                 }
                 else{
-                    oldGame.loadnewValues(p1,p2,saveState.game.getMat());
+                    oldGame.loadNewValues(p1,p2,saveState.game.getMat());
 
                 }
                 objIn.close();

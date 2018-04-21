@@ -1,24 +1,18 @@
 package model;
 
 import javafx.scene.paint.Color;
-import model.Fraction;
-import model.MAX;
-import model.Matrix;
-import model.Player;
+import javafx.scene.paint.Paint;
 
-/**
- * Output class
- * @author Tobias Fetzer 198318, Simon Stratemeier 199067
- * @version 3.0 30.03.2018
- */
-public class Board {
+public class GameModel {
     BoardElement[][] boardElements = new BoardElement[8][8];  //Array von Boardelemnts, stellt Feld da
+    Player player1 = new Player(new Position(0,0), "undefined", "undefined", Color.WHITE);
+    Player player2 = new Player(new Position(0,0), "undefined", "undefined", Color.WHITE);
 
     public BoardElement[][] getBoardElements() {
         return boardElements;
     }
 
-    public Board() {                    //Konstruktor, füllt Array mit BoardElemnts
+    public GameModel() {                    //Konstruktor, füllt Array mit BoardElemnts
         for(int i = 0; i<8; i++) {
             for(int j = 0; j < 8; j++) {
                 boardElements[i][j] = new BoardElement();
@@ -27,7 +21,7 @@ public class Board {
     }
 
     //Matrix wird geupdated
-    public void update(Player p1, Player p2, Matrix<Fraction> mat) {
+    public void update(Player p1, Player p2, Player currentPlayer, Matrix<Fraction> mat) {
         for(int y = MAX.START_Y; y <= MAX.END_Y; y++) {     //geht bis zum Rand
             for(int x = MAX.START_X; x <= MAX.END_X; x++) {
                 BoardElement boardElement = boardElements[x-1][y-1];
