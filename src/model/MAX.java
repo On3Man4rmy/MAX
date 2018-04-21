@@ -100,6 +100,7 @@ public class MAX implements Serializable {
         getCurrentPlayer().setScore(getCurrentPlayer().getScore().add(getMat().getValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y)));
         // Update score of remaining playing field points
         sum = sum.subtract(getMat().getValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y));
+
         // When player arrives field set field value to 0
         getMat().setValue(getCurrentPlayer().getPosition().x, getCurrentPlayer().getPosition().y, Fraction.ZERO);
 
@@ -199,6 +200,8 @@ public class MAX implements Serializable {
         setMat(mat);
         setCurrentPlayer(player1);
         setOtherPlayer(player2);
+
+        sum = mat.reduce(Fraction::add, Fraction.ZERO);
 
         board.update(player1, player2, mat);
     }
