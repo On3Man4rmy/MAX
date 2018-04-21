@@ -1,10 +1,9 @@
 package App;
 
-import GameWindow.GamePane;
+import GameWindow.GameWindow;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.MAX;
 
 /**
  * Klasse dient zum Starten des spiels, erzeugt Fenster,
@@ -24,9 +23,9 @@ public class App extends Application {
     }
 
     public void openNewGame() {
-        //Erzeugt GamePane über Rootlayout.fxml
+        //Erzeugt GameWindow über Rootlayout.fxml
         Stage stage = new Stage();
-        GamePane game = new GamePane(stage, this);
+        GameWindow game = new GameWindow(stage, this);
         Scene scene = new Scene(game, 500, 500);
         scene.setOnKeyPressed(game.getKeyboardEventPublisher()::publish);  //onkeypressed wird die funktion publish ausgeführt
         stage.setScene(scene);
@@ -35,7 +34,7 @@ public class App extends Application {
     }
 
     public void restartGame(Stage stage) {
-        GamePane game = new GamePane(stage, this);
+        GameWindow game = new GameWindow(stage, this);
         Scene scene = new Scene(game, 500, 500);
         scene.setOnKeyPressed(game.getKeyboardEventPublisher()::publish);  //onkeypressed wird die funktion publish ausgeführt
         stage.setScene(scene);

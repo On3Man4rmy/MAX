@@ -1,12 +1,11 @@
 package model;
 
-import GameWindow.GamePane;
+import GameWindow.GameWindow;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import util.KeyboardEventPublisher;
 import util.MathUtil;
 
 import java.io.File;
@@ -41,7 +40,7 @@ public class MAX implements Serializable {
     /**
      * Konstruktor, Board wird zum ersten Mal kreiert
      */
-    public MAX(GamePane controller) {
+    public MAX(GameWindow controller) {
         board.update(player1, player2, mat);
         getCurrentPlayer().setIsSelected(true);
         //this.controller = controller;

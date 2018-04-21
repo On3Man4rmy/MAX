@@ -18,11 +18,11 @@ import util.KeyboardEventPublisher;
 import java.io.IOException;
 
 /**
- * Controller für GamePane.fxml
+ * Controller für GameWindow.fxml
  * @author  Fetzer 198318, Simon Stratemeier 199067
  * @version 2.0 19/04/2018
  */
-public class GamePane extends AnchorPane {
+public class GameWindow extends AnchorPane {
     KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
     MenuLabel winnerInformation = new MenuLabel("Unentschieden");
     Stage stage;
@@ -48,8 +48,8 @@ public class GamePane extends AnchorPane {
             new MenuButton("New Game", event -> actionNewGame()),
     };
 
-    public GamePane(Stage stage, App app){
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePane.fxml"));
+    public GameWindow(Stage stage, App app){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GameWindowView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
         try {
