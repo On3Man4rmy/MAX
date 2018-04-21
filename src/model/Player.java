@@ -11,7 +11,7 @@ import java.io.*;
  * @version 3.0 19/04/2018
  */
 
-public class Player implements Serializable{
+public class Player implements Serializable {
     // Name
     transient private StringProperty name = new SimpleStringProperty();
     transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
@@ -30,6 +30,8 @@ public class Player implements Serializable{
     public Player(Position position) {
         setPosition(position);
     }
+
+    public Player() {}
 
     //Bewegt den Spieler
     public Player moveDirection(Actions direction) {
@@ -99,5 +101,32 @@ public class Player implements Serializable{
     @Override
     public String toString() {
         return this.getShortName();
+    }
+
+    // https://stackoverflow.com/a/45655071
+    private void writeObject(ObjectOutputStream s) throws IOException {
+        s.defaultWriteObject();
+        s.writeUTF(getName());
+        s.writeUTF(getShortName());
+        s.writeUTF(getFill().toString());
+        s.writeBoolean(isSelected());
+        s.writeObject(getPosition());
+        s.writeObject(getScore());
+    }
+
+    // https://stackoverflow.com/a/45655071
+    private void readObject(ObjectInputStream s) throws IOException, ClassNotFoundException {
+        name = new SimpleStringProperty();
+        shortName = new SimpleStringProperty();
+        fillProperty = new SimpleObjectProperty<>();
+        isSelectedProperty = new SimpleBooleanProperty();
+        positionProperty = new SimpleObjectProperty<>();
+        score = new SimpleObjectProperty<>();
+        setName(s.readUTF());
+        setShortName(s.readUTF());
+        setFill(Color.web(s.readUTF()));
+        setIsSelected(s.readBoolean());
+        setPosition((Position)s.readObject());
+        setScore((Fraction)s.readObject());
     }
 }
