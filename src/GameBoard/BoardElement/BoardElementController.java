@@ -1,26 +1,26 @@
-package Fraction;
+package GameBoard.BoardElement;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import model.BoardElement;
+
 import java.io.IOException;
 
 /**
- * Controller für FractionView.fxml
+ * Controller für BoardElementView.fxml
  *
  * @author Fetzer 198318, Simon Stratemeier 199067
  * @version 1.0 30.03.2018
  */
 
-public class FractionController extends VBox {
+public class BoardElementController extends VBox {
     @FXML
     private Label lblFraction;
 
-    public FractionController(BoardElement boardElement) {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("FractionView.fxml"));
+    public BoardElementController(model.BoardElement boardElement) {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoardElementView.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 

@@ -150,7 +150,7 @@ public class MAX implements Serializable {
         return p1.getPosition().equals(p2.getPosition());
     }
 
-    // Create Fraction with random value
+    // Create GameBoard.BoardElementController with random value
     public static Fraction getGameFraction() {
         int minNumerator, maxNumerator, randomNumerator;
         int minDenominator, maxDenominator, randomDenominator;
