@@ -24,7 +24,6 @@ import java.io.IOException;
  */
 public class GameWindow extends AnchorPane {
     KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
-    MenuLabel winnerInformation = new MenuLabel("Unentschieden");
     Stage stage;
     MAX model;   //erzeugt MAXGame
     App app;
@@ -38,6 +37,7 @@ public class GameWindow extends AnchorPane {
     GameMenu gameMenu;
     @FXML
     GameBoard gameBoardController;
+    MenuButton winnerInformation = new MenuButton("Unentschieden", event -> actionCloseWindow());
     Node[] gameEndMenuNodes = {
             winnerInformation,
             new MenuButton("Retry?", event -> actionRestartGame()),
@@ -141,6 +141,10 @@ public class GameWindow extends AnchorPane {
         app.openNewGame();
     }
 
+    public void actionCloseWindow() {
+        stage.close();
+    }
+
     public void actionSaveGame() {
         model.enterAction(Actions.SAVE);
         System.out.println("Save Game");
@@ -149,6 +153,7 @@ public class GameWindow extends AnchorPane {
     public void actionRestartGame() {
         app.restartGame(stage);
     }
+
     public void actionLoadGame() {
         System.out.println("Load Game");
         model.enterAction(Actions.LOAD);

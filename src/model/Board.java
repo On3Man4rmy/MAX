@@ -34,11 +34,9 @@ public class Board {
                 if(p1.getPosition().x == x && p1.getPosition().y == y) {  //wenn amn an p1 position ist
                     boardElement.setTextProperty(p1.getShortName());
                     boardElement.setFillProperty(p1.getFill());
-                    mat.setValue(x,y,Fraction.ZERO);
                 } else if(p2.getPosition().x == x && p2.getPosition().y == y) {       //p2 position
                     boardElement.setTextProperty(p2.getShortName());
                     boardElement.setFillProperty(p2.getFill());
-                    mat.setValue(x,y,Fraction.ZERO);
                 } else {            //normale fractions
                     boardElement.setTextProperty(mat.getValue(x,y).toString());
                     boardElement.setFillProperty(Color.WHITE);
