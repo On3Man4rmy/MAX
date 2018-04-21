@@ -1,19 +1,16 @@
 package GameWindow;
 
 import App.App;
+import GameBoard.GameBoard;
 import GameMenu.Button.MenuButton;
 import GameMenu.GameMenu;
 import GameMenu.Label.MenuLabel;
-import Fraction.FractionController;
 import PlayerScoreView.PlayerScore;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import model.*;
 import util.KeyboardEventPublisher;
@@ -26,29 +23,30 @@ import java.io.IOException;
  * @version 2.0 19/04/2018
  */
 public class GamePane extends AnchorPane {
-    @FXML
-    GridPane rootLayout;
+    KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
+    MenuLabel winnerInformation = new MenuLabel("Unentschieden");
+    Stage stage;
+    MAX model;   //erzeugt MAXGame
+    App app;
     @FXML
     PlayerScore playerScore1;
     @FXML
     PlayerScore playerScore2;
     @FXML
+    GridPane rootLayout;
+    @FXML
     GameMenu gameMenu;
+    @FXML
+    GameBoard gameBoardController;
+    Node[] gameEndMenuNodes = {
+            winnerInformation,
+            new MenuButton("Retry?", event -> actionRestartGame()),
+    };
     Node[] standardMenuNodes = {
             new MenuButton("Load", event -> actionLoadGame()),
             new MenuButton("Save", event -> actionSaveGame()),
             new MenuButton("New Game", event -> actionNewGame()),
     };
-    MenuLabel winnerInformation = new MenuLabel("Unentschieden");
-    Node[] gameEndMenuNodes = {
-            winnerInformation,
-            new MenuButton("Retry?", event -> actionRestartGame()),
-    };
-    public KeyboardEventPublisher keyboardEventPublisher; //erzeugt KeyBoardEventPublisher
-    public MAX model;   //erzeugt MAXGame
-    App app;
-    Stage stage;
-    GridPane gameBoard;
 
     public GamePane(Stage stage, App app){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("GamePane.fxml"));
@@ -109,49 +107,27 @@ public class GamePane extends AnchorPane {
         });
     }
     private void initializeGameBoard(){
-        rootLayout.getChildren().remove(gameBoard);
-        gameBoard = new GridPane();
-        for(int i = 0; i < 8; i++) {
-            RowConstraints row = new RowConstraints();
-            ColumnConstraints column = new ColumnConstraints();
-            row.setVgrow(Priority.SOMETIMES);
-            column.setHgrow(Priority.SOMETIMES);
-            gameBoard.getRowConstraints().add(row);
-            gameBoard.getColumnConstraints().add(column);
-
-            for(int j = 0; j < 8; j++) {
-                FractionController fractionView = new FractionController(model.board.getBoardElements()[i][j]);
-                gameBoard.add(fractionView, i, j);
-            }
-        }
-
-        rootLayout.add(gameBoard, 0, 1);
+        gameBoardController.setBoard(model.board);
     }
+
     private void initalizePlayers(){
         playerScore1.bindPlayer(model.getPlayer1());
         playerScore2.bindPlayer(model.getPlayer2());
     }
 
-    public void setApp (App app) {
-        this.app = app;
-    }
-    public void setStage(Stage stage) {
-        model.setStage(stage);
-        this.stage = stage;
-    }
-
     public void announceGameEnd() {
         Player winner = model.getWinner();
         if(winner != null) {
-            winnerInformation.setText(winner.getName() + " gewinnt!");
-            winnerInformation.setTextFill(winner.fillProperty.getValue());
+            winnerInformation.setText(winner.getName() + " wins!");
+            winnerInformation.setTextFill(winner.getFillProperty().getValue());
         } else  {
-            winnerInformation.setText("Untenschieden");
+            winnerInformation.setText("Draw -.-\"");
         }
 
         gameMenu.setChildren(gameEndMenuNodes);
         toogleMenuVisibility();
     }
+
     public void toogleMenuVisibility() {
         if(gameMenu.isVisible()) {
             gameMenu.setVisible(false);
@@ -161,10 +137,10 @@ public class GamePane extends AnchorPane {
             rootLayout.setEffect(new GaussianBlur());
         }
     }
-
     public void actionNewGame() {
         app.openNewGame();
     }
+
     public void actionSaveGame() {
         model.enterAction(Actions.SAVE);
         System.out.println("Save Game");
@@ -173,10 +149,21 @@ public class GamePane extends AnchorPane {
     public void actionRestartGame() {
         app.restartGame(stage);
     }
-
     public void actionLoadGame() {
         System.out.println("Load Game");
         model.enterAction(Actions.LOAD);
         toogleMenuVisibility();
+    }
+
+    public void setApp (App app) {
+        this.app = app;
+    }
+
+    public void setStage(Stage stage) {
+        this.stage = stage;
+    }
+
+    public KeyboardEventPublisher getKeyboardEventPublisher() {
+        return keyboardEventPublisher;
     }
 }

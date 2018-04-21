@@ -58,6 +58,7 @@
                 <PlayerScore fx:id="playerScore2" GridPane.rowIndex="1"/>
             </GridPane>
          </GridPane>
+          <fx:include fx:id="gameBoard" source="../GameBoard/GameBoardView.fxml" GridPane.rowIndex="1"/>
       </GridPane>
    </children>
 </fx:root>

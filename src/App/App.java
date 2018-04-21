@@ -28,7 +28,7 @@ public class App extends Application {
         Stage stage = new Stage();
         GamePane game = new GamePane(stage, this);
         Scene scene = new Scene(game, 500, 500);
-        scene.setOnKeyPressed(game.keyboardEventPublisher::publish);  //onkeypressed wird die funktion publish ausgeführt
+        scene.setOnKeyPressed(game.getKeyboardEventPublisher()::publish);  //onkeypressed wird die funktion publish ausgeführt
         stage.setScene(scene);
         stage.setTitle("MAX Game");
         stage.show();
@@ -37,8 +37,7 @@ public class App extends Application {
     public void restartGame(Stage stage) {
         GamePane game = new GamePane(stage, this);
         Scene scene = new Scene(game, 500, 500);
-        scene.setOnKeyPressed(game.keyboardEventPublisher::publish);  //onkeypressed wird die funktion publish ausgeführt
+        scene.setOnKeyPressed(game.getKeyboardEventPublisher()::publish);  //onkeypressed wird die funktion publish ausgeführt
         stage.setScene(scene);
     }
-
 }
