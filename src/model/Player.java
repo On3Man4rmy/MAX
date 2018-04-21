@@ -13,12 +13,12 @@ import java.io.*;
 
 public class Player implements Serializable {
     // Name
-    transient private StringProperty name = new SimpleStringProperty();
-    transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
     transient private ObjectProperty<Fraction> score = new SimpleObjectProperty<>(new Fraction(0,1));
+    transient private ObjectProperty<Position> positionProperty = new SimpleObjectProperty<>();
+    transient private ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
+    transient private BooleanProperty isSelectedProperty = new SimpleBooleanProperty();
     transient private StringProperty shortName = new SimpleStringProperty();
-    transient public ObjectProperty<Paint> fillProperty = new SimpleObjectProperty<>();
-    transient public ObjectProperty<Position> positionProperty = new SimpleObjectProperty<>();
+    transient private StringProperty name = new SimpleStringProperty();
 
     public Player (Position position, String name, String shortName, Color color) {
         setPosition(position);
@@ -26,11 +26,9 @@ public class Player implements Serializable {
         setShortName(shortName);
         setFill(color);
     }
-
     public Player(Position position) {
         setPosition(position);
     }
-
     public Player() {}
 
     //Bewegt den Spieler
@@ -44,6 +42,7 @@ public class Player implements Serializable {
         return new Player(getPosition().peekDirection(direction));
     }
 
+    // Name
     public void setName(String name) {
         this.name.set(name);
     }
@@ -53,6 +52,7 @@ public class Player implements Serializable {
     public StringProperty getNameProperty() {
         return name;
     }
+
     // Short name
     public void setShortName(String shortName) {
         this.shortName.set(shortName);

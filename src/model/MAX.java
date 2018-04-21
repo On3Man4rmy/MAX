@@ -6,6 +6,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import util.KeyboardEventPublisher;
 import util.MathUtil;
 
 import java.io.File;
@@ -19,7 +20,6 @@ import java.io.Serializable;
  * @version 4.0 19/04/2018
  */
 public class MAX implements Serializable {
-
     // Variables for playing ground properties
     public static final int END_X = 8;  //Definiert die Ränder
     public static final int END_Y = 8;
@@ -34,8 +34,6 @@ public class MAX implements Serializable {
     private transient Player otherPlayer = getPlayer2();
     transient public Board board = new Board();   //Spielbrett
     transient public boolean changePlayer = true;  //Varaible, damit SPeiler sich nich wechselt wenn gegen wand oder anderen Spieler laufen
-    transient private Stage stage;
-    //transient GamePane controller;
     transient private BooleanProperty isGameDone = new SimpleBooleanProperty();
     public BooleanProperty isGameDoneProperty() {
         return isGameDone;
@@ -182,9 +180,10 @@ public class MAX implements Serializable {
         return mat;
     }
 
+    /*
     public void setStage(Stage stage) {
         this.stage = stage;
-    }
+    }*/
 
     //Updates the new Values when laoding a new model
     public void loadNewValues(Player player1, Player player2, Matrix<Fraction> mat) {
