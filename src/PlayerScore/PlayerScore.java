@@ -1,4 +1,4 @@
-package PlayerScoreView;
+package PlayerScore;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,7 @@ import model.Player;
 import util.MathUtil;
 
 /**
- * Controller für PlayerScoreView.fxml
+ * Controller für PlayerScore.fxml
  * @author  Fetzer 198318, Simon Stratemeier 199067
  * @version 1.0 30.03.2018
  */

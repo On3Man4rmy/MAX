@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import GameMenu.GameMenu?>
-<?import PlayerScoreView.PlayerScore?>
+<?import PlayerScore.PlayerScore?>
 <fx:root
         type="javafx.scene.layout.AnchorPane"
         stylesheets="@style.css"

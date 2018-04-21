@@ -5,7 +5,7 @@ import GameBoard.GameBoard;
 import GameMenu.Button.MenuButton;
 import GameMenu.GameMenu;
 import GameMenu.Label.MenuLabel;
-import PlayerScoreView.PlayerScore;
+import PlayerScore.PlayerScore;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
